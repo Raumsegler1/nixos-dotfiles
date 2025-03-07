@@ -177,14 +177,14 @@
       kdePackages.kate
     ];
   };
-/*
+
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     users = {
       "raumsegler" = import ./home.nix;
     };
   };
-*/
+
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
