@@ -193,7 +193,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   wget
-  firefox
   chromium
   thunderbird
   vscodium
