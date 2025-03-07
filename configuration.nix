@@ -174,7 +174,6 @@
     description = "raumsegler";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      kdePackages.kate
     ];
   };
 
@@ -183,6 +182,8 @@
     users = {
       "raumsegler" = import ./home.nix;
     };
+    useGlobalPkgs = true;
+    useUserPackages = true;
   };
 
   # Allow unfree packages
