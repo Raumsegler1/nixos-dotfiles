@@ -33,8 +33,12 @@
         name = "Iosevka Nerd Font";
         size = 10;
       };
+
       shellIntegration.enableFishIntegration = true;
+
       settings = {
+        shell = "${pkgs.fish}/bin/fish";
+
         fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
         window_margin_width = 0;
         window_padding_width = 4;
