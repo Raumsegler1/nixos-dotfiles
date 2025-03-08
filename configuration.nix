@@ -36,7 +36,7 @@
       fwsetup
       reboot
       }";
-    theme = "./virtuaverse";
+    theme = "/etc/nixos/virtuaverse";
   };
 
 
