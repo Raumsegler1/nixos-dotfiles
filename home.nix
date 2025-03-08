@@ -115,7 +115,7 @@
   };
 
   home.sessionVariables = {
-    EDITOR    = "vscodium";
+    EDITOR    = "codium";
     TERMINAL  = "kitty";
     BROWSER   = "chromium";
   };
