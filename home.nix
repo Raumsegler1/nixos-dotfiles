@@ -22,7 +22,7 @@
     btop = {
       enable = true;
       settings = {
-        theme_background = false; #any btop settings break the rebuild for whatever reason
+        theme_background = false;
         color_theme = "kyli0x";
       };
     };
@@ -30,10 +30,11 @@
       enable = true;
       font = {
         package = pkgs.nerdfonts;
-        name = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
+        name = "Iosevka Nerd Font";
         size = 10;
       };
       settings = {
+        fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
         window_margin_width = 0;
         window_padding_width = 4;
         confirm_os_windows_close = 0;
@@ -55,6 +56,27 @@
 
         scrollback_lines = 1500;
         wheel_scroll_multiplier = "10.0";
+        shell = "/usr/bin/fish";
+      };
+    };
+    fish = {
+      enable = true;
+      plugins = [
+      ];
+      shellInit = "starship init fish | source";
+    };
+    starship = {
+      enable = true;
+      # Configuration written to ~/.config/starship.toml
+      settings = {
+        # add_newline = false;
+
+        # character = {
+        #   success_symbol = "[➜](bold green)";
+        #   error_symbol = "[➜](bold red)";
+        # };
+
+        # package.disabled = true;
       };
     };
   };
@@ -62,15 +84,15 @@
   gtk = {
     enable = true;
     theme = {
-      name = "Breeze";
+      name    = "Breeze";
       package = pkgs.kdePackages.breeze;
     };
     cursorTheme = {
-      name = "bibata-cursors";
+      name    = "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
     };
     iconTheme = {
-      name = "candy-icons";
+      name    = "candy-icons";
       package = pkgs.candy-icons;
     };
   };
@@ -90,10 +112,9 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "vscodium";
-    TERMINAL = "kitty";
-    SHELL = "fish";
-    BROWSER = "chromium";
+    EDITOR    = "vscodium";
+    TERMINAL  = "kitty";
+    BROWSER   = "chromium";
   };
 
   # Let Home Manager install and manage itself.

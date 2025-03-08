@@ -201,7 +201,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup"; # Makes automatic Backups in case of conflicting files
+    backupFileExtension = "backkup"; # Makes automatic Backups in case of conflicting files
 
   };
 
