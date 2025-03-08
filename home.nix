@@ -33,6 +33,7 @@
         name = "Iosevka Nerd Font";
         size = 10;
       };
+      shellIntegration.enableFishIntegration = true;
       settings = {
         fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
         window_margin_width = 0;
@@ -61,12 +62,11 @@
     };
     fish = {
       enable = true;
-      plugins = [
-      ];
-      shellInit = "starship init fish | source";
+      plugins = [];
     };
     starship = {
       enable = true;
+      enableFishIntegration = true;
       # Configuration written to ~/.config/starship.toml
       settings = {
         # add_newline = false;
