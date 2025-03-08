@@ -57,7 +57,6 @@
 
         scrollback_lines = 1500;
         wheel_scroll_multiplier = "10.0";
-        shell = "/usr/bin/fish";
       };
     };
     fish = {
