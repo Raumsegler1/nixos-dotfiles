@@ -2,7 +2,7 @@
 
 {
   imports = [
-    #./modules/myModule.nix
+    ./modules/hypr.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "raumsegler";
@@ -96,10 +96,10 @@
     vscode = {
       enable = true;
       package = pkgs.vscodium;
-      enableExtensionUpdateCheck = true;
+      enableExtensionUpdateCheck = false;
       enableUpdateCheck =true;
       extensions = with pkgs.vscode-extensions; [
-        jnoortheen.nix-ide
+        jnoortheen.nix-ide # version doesnt match with vscodium
 
       ];
       userSettings = {
