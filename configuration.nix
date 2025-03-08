@@ -201,7 +201,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "bckp"; # Makes automatic Backups in case of conflicting files
+    backupFileExtension = "backup3"; # Makes automatic Backups in case of conflicting files
 
   };
 
@@ -212,6 +212,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  neovim
   nh
   wget
   chromium
