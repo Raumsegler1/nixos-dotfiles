@@ -82,6 +82,30 @@
         # package.disabled = true;
       };
     };
+    chromium = {
+      extensions = [
+        {
+          id = "nngceckbapebfimnlniiiahkandclblb"; # Bitwarden
+        }
+        {
+          id = "ddkjiahejlhfcafbddmgiahcphecmpfh";  # uBlock Origin Lite
+        }
+      ];
+      enable = true;
+    };
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
+      enableExtensionUpdateCheck = true;
+      enableUpdateCheck =true;
+      extensions = with pkgs.vscode-extensions; [
+        jnoortheen.nix-ide
+
+      ];
+      userSettings = {
+
+      };
+    };
   };
 
   gtk = {
@@ -102,9 +126,7 @@
 
   # The home.packages option allows you to install Nix packages into your environment.
   home.packages = with pkgs; [
-    chromium
     thunderbird
-    vscodium
     vesktop
     kdePackages.kate
   ];
