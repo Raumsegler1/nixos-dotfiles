@@ -16,12 +16,22 @@
 
   # Bootloader
   boot = {
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
-    };
+   #loader = {
+      #systemd-boot.enable = true;
+      #efi.canTouchEfiVariables = true;
+    #};
     kernelParams = [ "nomodeset" ];
   };
+
+  # Enable GRUB
+  boot.loader.grub = {
+    enable = true;
+    efiSupport = true;          # Enable EFI support
+    device = "nodev";           # Use "nodev" for UEFI systems
+    efiInstallAsRemovable = true; # Ensure GRUB is installed in a way UEFI can find
+    useOSProber = true;         # Automatically detect other operating systems
+  };
+
 
   networking.hostName = "magnetar"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
