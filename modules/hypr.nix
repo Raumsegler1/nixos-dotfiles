@@ -1,12 +1,6 @@
 {config, pkgs, ... }:
 
 {
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-  programs.hypyrland = {
-    enable = true;
-    xwayland.enable =true;
-  };
-
   wayland.windowManager.hyprland = {
     enable = true;
     systemd.variables = ["--all"];
