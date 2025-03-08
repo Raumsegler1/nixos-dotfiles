@@ -16,7 +16,7 @@
 
   # Bootloader
   boot = {
-   #loader = {
+    #loader = {
       #systemd-boot.enable = true;
       #efi.canTouchEfiVariables = true;
     #};
@@ -30,6 +30,13 @@
     device = "nodev";           # Use "nodev" for UEFI systems
     efiInstallAsRemovable = true; # Ensure GRUB is installed in a way UEFI can find
     useOSProber = true;         # Automatically detect other operating systems
+    extraEntries = "
+      menuentry 'Enter BIOS Setup' {
+      echo 'Rebooting into BIOS setup...'
+      fwsetup
+      reboot
+      }";
+    theme = "./virtuaverse";
   };
 
 
