@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./modules/myModule.nix
+    #./modules/myModule.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "raumsegler";
@@ -22,15 +22,15 @@
     btop = {
       enable = true;
       settings = {
-#        theme_background = false; #any btop settings break the rebuild for whatever reason
+        theme_background = false; #any btop settings break the rebuild for whatever reason
       };
     };
     kitty = {
       enable = true;
       font = {
-        package = [pkgs.nerdfont];
+        package = pkgs.nerdfonts;
         name = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
-        size = "10";
+        size = 10;
       };
     };
   };
@@ -39,15 +39,15 @@
     enable = true;
     theme = {
       name = "Breeze";
-      package = [pkgs.kdePackages.breeze];
+      package = pkgs.kdePackages.breeze;
     };
     cursorTheme = {
       name = "bibata-cursors";
-      package = [pkgs.bibata-cursors];
+      package = pkgs.bibata-cursors;
     };
     iconTheme = {
       name = "candy-icons";
-      package = [pkgs.candy-icons];
+      package = pkgs.candy-icons;
     };
   };
 

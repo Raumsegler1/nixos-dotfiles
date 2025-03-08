@@ -201,7 +201,10 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
+    backupFileExtension = "backup"; # Makes automatic Backups in case of conflicting files
+
   };
+
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
