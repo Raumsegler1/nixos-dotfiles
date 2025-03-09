@@ -20,7 +20,7 @@
       #systemd-boot.enable = true;
       #efi.canTouchEfiVariables = true;
     #};
-    kernelParams = [ "nomodeset" ];
+    kernelParams = [];
   };
 
   # Enable GRUB
@@ -124,15 +124,14 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  services.xserver.videoDrivers = ["nvidia"];
-  hardware = {
-    opengl = {
-      enable = true;
-      driSupport = true;
-    };
+  services.xserver.videoDrivers = ["nouveau" "amdgpu"];
+
+  hardware.bumblebee = {
+    enable = true;
+    driver = "nouveau";
   };
 
-  #takes long too compile and needs  nvidia drivers
+/*  #takes long too compile and needs  nvidia drivers
   hardware.nvidia = {
     prime = {
       offload = {
@@ -163,15 +162,15 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = true;
+    open = false;
 
     # Enable the Nvidia settings menu,
-	# accessible via `nvidia-settings`.
+	  # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
     package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
+  }; */
 
   powerManagement.enable = true;
   services.power-profiles-daemon.enable = false;
@@ -236,6 +235,7 @@
   lshw
   btop
   git
+  primusLib
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = 1;
