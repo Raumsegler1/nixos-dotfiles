@@ -77,10 +77,10 @@
     enable = true;
     wayland = {
       enable = true;
-      theme = "";
     };
+    theme = "";
     settings = {
-      
+
     };
   };
   services.desktopManager.plasma6.enable = true;
