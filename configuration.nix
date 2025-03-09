@@ -226,7 +226,6 @@
   environment.sessionVariables.NIXOS_OZONE_WL = "1";
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
   };
 
   # Some programs need SUID wrappers, can be configured further or are
