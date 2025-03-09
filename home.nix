@@ -137,7 +137,8 @@
   };
 
   home.sessionVariables = {
-    EDITOR    = "codium";
+    EDITOR    = "nvim";
+    VISUAL    = "codium";
     TERMINAL  = "kitty";
     BROWSER   = "chromium";
   };
