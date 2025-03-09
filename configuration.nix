@@ -122,19 +122,19 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  services.xserver.videoDrivers = ["nouveau" "amdgpu"];
+  services.xserver.videoDrivers = ["nvidia" "amd"];
 
-  hardware.bumblebee = {
+/*  hardware.bumblebee = { # doesnt find the amd iGpu
     enable = true;
     driver = "nouveau";
   };
-
-/*  #takes long too compile and needs  nvidia drivers
+*/
+  #takes long too compile and needs  nvidia drivers
   hardware.nvidia = {
     prime = {
       offload = {
         enable = true;
-        enableOffloadCmd = true;
+        #enableOffloadCmd = true;
       };
       # Make sure to use the correct Bus ID values for your system!
       nvidiaBusId = "PCI:64:0:0";
@@ -152,7 +152,7 @@
 
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
-    powerManagement.finegrained = true;
+    #powerManagement.finegrained = true;
 
     # Use the NVidia open source kernel module (not to be confused with the
     # independent third-party "nouveau" open source driver).
@@ -160,15 +160,15 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = false;
+    open = true;
 
     # Enable the Nvidia settings menu,
 	  # accessible via `nvidia-settings`.
     nvidiaSettings = true;
 
     # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    package = config.boot.kernelPackages.nvidiaPackages.latest;
-  }; */
+    #package = config.boot.kernelPackages.nvidiaPackages.latest;
+  }; 
 
   powerManagement.enable = true;
   services.power-profiles-daemon.enable = false;

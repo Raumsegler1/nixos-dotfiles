@@ -17,6 +17,7 @@
       extraConfig = {
         pull.rebase = false;
         init.defaultBranch = "main";
+        safe.directory = "/etc/nixos";
       };
     };
     btop = {
@@ -31,7 +32,7 @@
       font = {
         package = pkgs.nerdfonts;
         name = "Iosevka Nerd Font";
-        size = 10;
+        size = 12;
       };
 
       shellIntegration.enableFishIntegration = true;
