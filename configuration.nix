@@ -73,7 +73,16 @@
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm = {
+    enable = true;
+    wayland = {
+      enable = true;
+      theme = "";
+    };
+    settings = {
+      
+    };
+  };
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -116,6 +125,12 @@
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
   services.xserver.videoDrivers = ["nvidia"];
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+    };
+  };
 
   #takes long too compile and needs  nvidia drivers
   hardware.nvidia = {
