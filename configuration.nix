@@ -78,10 +78,8 @@
     wayland = {
       enable = true;
     };
-    theme = "";
-    settings = {
-
-    };
+    #theme = "/etc/nixos/sakura-sddm-theme/pixel_sakura.conf";
+    #settings = {};
   };
   services.desktopManager.plasma6.enable = true;
 
@@ -236,6 +234,10 @@
   btop
   git
   primusLib
+  ];
+
+  fonts.packages = with pkgs; [
+    zpix-pixel-font
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = 1;
