@@ -108,7 +108,7 @@
     };
   };
 
-  gtk = {
+/*  gtk = {
     enable = true;
     theme = {
       name    = "Breeze";
@@ -123,7 +123,7 @@
       package = pkgs.candy-icons;
     };
   };
-
+*/
   # The home.packages option allows you to install Nix packages into your environment.
   home.packages = with pkgs; [
     thunderbird
