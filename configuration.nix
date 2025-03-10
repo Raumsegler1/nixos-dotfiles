@@ -20,7 +20,7 @@
       #systemd-boot.enable = true;
       #efi.canTouchEfiVariables = true;
     #};
-    kernelParams = [];
+    kernelParams = [ "nouveau.modeset=0" ];
   };
 
   # Enable GRUB
@@ -122,7 +122,7 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
+  services.xserver.videoDrivers = [ "nvidia" ];
   boot.blacklistedKernelModules = [ "nouveau" "nvidia_wmi_ec_backlight" "nvidiafb" ];
 
 
@@ -188,12 +188,12 @@
         CPU_MAX_PERF_ON_AC = 100;
         CPU_MIN_PERF_ON_BAT = 0;
         CPU_MAX_PERF_ON_BAT = 60;
-
-       # Optional helps save long term battery health
-       #START_CHARGE_THRESH_BAT0 = 40; # 40 and below it starts to charge
-       STOP_CHARGE_THRESH_BAT0 = 90; # 80 and above it stops charging
-
       };
+  };
+
+  hardware.asus.battery = {
+  chargeUpto             = 90;   # Maximum level of charge for your battery, as a percentage.
+  enableChargeUptoScript = true; # Whether to add charge-upto to environment.systemPackages. `charge-upto 85` temporarily sets the charge limit to 85%.
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
