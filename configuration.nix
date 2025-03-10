@@ -9,7 +9,8 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       inputs.home-manager.nixosModules.default
-
+      #"${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/common/gpu/nvidia"
+      #"${builtins.fetchGit { url = "https://github.com/NixOS/nixos-hardware.git"; }}/common/hidpi.nix"
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -20,7 +21,7 @@
       #systemd-boot.enable = true;
       #efi.canTouchEfiVariables = true;
     #};
-    kernelParams = [ "nouveau.modeset=0" ];
+    #kernelParams = [ "nouveau.modeset=0" ];
   };
 
   # Enable GRUB
@@ -122,17 +123,10 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  services.xserver.videoDrivers = [ "nvidia" ];
-  boot.blacklistedKernelModules = [ "nouveau" "nvidia_wmi_ec_backlight" "nvidiafb" ];
+  #services.xserver.videoDrivers = [ "nvidia" ];
+  #boot.blacklistedKernelModules = [ "nouveau" ];
 
-
-/*  hardware.bumblebee = { # doesnt find the amd iGpu
-    enable = true;
-    driver = "nouveau";
-  };
-*/
-  #takes long too compile and needs  nvidia drivers
-  hardware.nvidia = {
+  /*hardware.nvidia = {
     prime = {
       offload = {
         #enable = true;
@@ -146,32 +140,41 @@
     # Modesetting is required.
     modesetting.enable = true;
 
-    # Nvidia power management. Experimental, and can cause sleep/suspend to fail.
-    # Enable this if you have graphical corruption issues or application crashes after waking
-    # up from sleep. This fixes it by saving the entire VRAM memory to /tmp/ instead
-    # of just the bare essentials.
-    powerManagement.enable = false;
-
     # Fine-grained power management. Turns off GPU when not in use.
     # Experimental and only works on modern Nvidia GPUs (Turing or newer).
     #powerManagement.finegrained = true;
-
-    # Use the NVidia open source kernel module (not to be confused with the
-    # independent third-party "nouveau" open source driver).
-    # Support is limited to the Turing and later architectures. Full list of
-    # supported GPUs is at:
-    # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
-    # Only available from driver 515.43.04+
     open = false;
-
-    # Enable the Nvidia settings menu,
-	  # accessible via `nvidia-settings`.
     nvidiaSettings = true;
+  }; *//*
+  hardware.nvidia =  {
+    package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
+	  version = "550.120";
+    sha256_64bit = "sha256-gBkoJ0dTzM52JwmOoHjMNwcN2uBN46oIRZHAX8cDVpc=";
+    sha256_aarch64 = "sha256-mVEeFWHOFyhl3TGx1xy5EhnIS/nRMooQ3+LdyGe69TQ=";
+	  openSha256 = "sha256-Po+pASZdBaNDeu5h8sgYgP9YyFAm9ywf/8iyyAaLm+w=";
+    settingsSha256 = "sha256-fPfIPwpIijoUpNlAUt9C8EeXR5In633qnlelL+btGbU=";
+	  persistencedSha256 = "sha256-Vz33gNYapQ4++hMqH3zBB4MyjxLxwasvLzUJsCcyY4k=";
+    };
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    dynamicBoost.enable = true;
+    #powerManagement.enable = true;
+    powerManagement.finegrained = true;
+    #nvidiaPersistenced = true;
 
-    # Optionally, you may need to select the appropriate driver version for your specific GPU.
-    #package = config.boot.kernelPackages.nvidiaPackages.latest;
-  }; 
 
+    prime = {
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+
+      amdgpuBusId = "PCI:65:0:0";
+      nvidiaBusId = "PCI:64:0:0";
+    };
+  };
+*/
   powerManagement.enable = true;
   services.power-profiles-daemon.enable = false;
 
