@@ -122,7 +122,9 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  services.xserver.videoDrivers = ["nvidia" "amd"];
+  services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
+  boot.blacklistedKernelModules = [ "nouveau" "nvidia_wmi_ec_backlight" "nvidiafb" ];
+
 
 /*  hardware.bumblebee = { # doesnt find the amd iGpu
     enable = true;
@@ -133,7 +135,7 @@
   hardware.nvidia = {
     prime = {
       offload = {
-        enable = true;
+        #enable = true;
         #enableOffloadCmd = true;
       };
       # Make sure to use the correct Bus ID values for your system!
@@ -160,7 +162,7 @@
     # supported GPUs is at:
     # https://github.com/NVIDIA/open-gpu-kernel-modules#compatible-gpus
     # Only available from driver 515.43.04+
-    open = true;
+    open = false;
 
     # Enable the Nvidia settings menu,
 	  # accessible via `nvidia-settings`.
