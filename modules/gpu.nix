@@ -7,8 +7,8 @@
   };
 
   # Load nvidia driver for Xorg and Wayland and breaks boot
-  #services.xserver.videoDrivers = [ "nvidia" ];
-  #boot.blacklistedKernelModules = [ "nouveau" ];
+  services.xserver.videoDrivers = [ "nouveau" "amdgpu" ];
+  boot.blacklistedKernelModules = [ "nvidia" ];
 
   /*hardware.nvidia = {
     prime = {
