@@ -32,7 +32,7 @@
         dim_strength = 0.18;
         dim_special = 0.5;
         blur = {
-          enabled = yes;
+          enabled = true; #yes
           size = 5;
           passes = 3;
           noise = 0;
@@ -45,14 +45,14 @@
         gaps_in = 5;
         gaps_out = 10;
         border_size = 3;
-        layout = dwindle;
+        layout = "dwindle";
         #layout = scroller;
         resize_on_border = true;
       };
 
       dwindle = {
-        pseudotile = no;
-        preserve_split = yes;
+        pseudotile = false; #no
+        preserve_split = true; #yes
         # special_scale_factor = 0.9;
       };
 
@@ -61,17 +61,17 @@
       };
 
       input = {
-        kb_layout = de;
+        kb_layout = "de";
         repeat_rate = 50;
         repeat_delay = 300;
 
         follow_mouse = 1;
         touchpad = {
-          natural_scroll = yes;
+          natural_scroll = true; #yes
         };
 
         #sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
-        accel_profile = flat;
+        accel_profile = "flat";
       };
 
       env = [
