@@ -32,7 +32,7 @@
         dim_strength = 0.18;
         dim_special = 0.5;
         blur = {
-          enabled = true; #yes
+          enabled = "yes"; 
           size = 5;
           passes = 3;
           noise = 0;
@@ -51,8 +51,8 @@
       };
 
       dwindle = {
-        pseudotile = false; #no
-        preserve_split = true; #yes
+        pseudotile = "no"; 
+        preserve_split = "yes"; 
         # special_scale_factor = 0.9;
       };
 
@@ -67,7 +67,7 @@
 
         follow_mouse = 1;
         touchpad = {
-          natural_scroll = true; #yes
+          natural_scroll = "yes"; 
         };
 
         #sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
