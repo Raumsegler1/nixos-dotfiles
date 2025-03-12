@@ -22,7 +22,7 @@
       #efi.canTouchEfiVariables = true;
     #};
     #kernelParams = [ "nouveau.modeset=0" ];
-    kernelPackages = pkgs.linuxPackages_6_13;
+    kernelPackages = pkgs.linuxPackages_6_12;
   };
 
   # Enable GRUB
