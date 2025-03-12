@@ -15,9 +15,9 @@
     settings = {
       "$mod" = "SUPER";
       bind = [
-	"$mod, T, exec, kitty"
-	"$mod, K, hyprctl disptach exit"
-	"$mod, C, exec, chromium"
+	      "$mod, T, exec, kitty"
+	      "$mod, K, hyprctl disptach exit"
+	      "$mod, C, exec, chromium"
       ];
     };
   };

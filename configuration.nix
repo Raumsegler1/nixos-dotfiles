@@ -8,7 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      ./modules/graphics.nix
+      ./modules/gpu.nix
+      ./modules/cpu.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -93,9 +94,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  # Enable touchpad support (enabled default in most desktopManager).
+  services.libinput.enable = true;
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
-
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false; # Disable PulseAudio
@@ -114,28 +117,6 @@
     };
     wireplumber.enable = true;
   };
-
-  powerManagement.enable = true;
-  services.power-profiles-daemon.enable = false;
-
-  services.tlp = {
-      enable = true;
-      settings = {
-        CPU_SCALING_GOVERNOR_ON_AC = "performance";
-        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
-
-        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
-        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-
-        CPU_MIN_PERF_ON_AC = 0;
-        CPU_MAX_PERF_ON_AC = 100;
-        CPU_MIN_PERF_ON_BAT = 0;
-        CPU_MAX_PERF_ON_BAT = 60;
-      };
-  };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  services.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raumsegler = {
