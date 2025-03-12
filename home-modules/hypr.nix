@@ -6,7 +6,6 @@
     #package = null;
     #portalPackage = null;
     xwayland.enable = true;
-    #systemd.variables = ["--all"];
     /*extraConfig = ''
       ${builtins.readFile ./hypr/hyprland.conf}
       ${builtins.readFile ./hypr/animations.conf}
@@ -99,10 +98,10 @@
       };
 
       env = [
-        "LIBVA_DRIVER_NAME, nvidia"
-        "__GLX_VENDOR_LIBRARY_NAME, nvidia"
+        #"LIBVA_DRIVER_NAME, nvidia"
+        #"__GLX_VENDOR_LIBRARY_NAME, nvidia"
         #"NVD_BACKEND, direct" # needs libva-nvidia-driver
-        #"WLR_DRM_DEVICES,/dev/dri/card1 # Only use iGPU" # needs working amd-gpu
+        "WLR_DRM_DEVICES,/dev/dri/card0 # Only use iGPU" # needs working amd-gpu
 
 
         "XDG_CURRENT_DESKTOP,Hyprland"

@@ -21,7 +21,7 @@
       #systemd-boot.enable = true;
       #efi.canTouchEfiVariables = true;
     #};
-    #kernelParams = [ "nouveau.modeset=0" ];
+    #kernelParams = [];
     kernelPackages = pkgs.linuxPackages_6_12;
   };
 
@@ -155,6 +155,7 @@
   lshw
   btop
   git
+  nvtopPackages.full
   ];
 
   fonts.packages = with pkgs; [
