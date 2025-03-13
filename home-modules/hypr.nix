@@ -3,22 +3,55 @@
 {
   wayland.windowManager.hyprland = {
     enable = true;
-    #package = null;
-    #portalPackage = null;
     xwayland.enable = true;
-    /*extraConfig = ''
-      ${builtins.readFile ./hypr/hyprland.conf}
-      ${builtins.readFile ./hypr/animations.conf}
-      ${builtins.readFile ./hypr/rules.conf}
-      ${builtins.readFile ./hypr/theme.conf}
-      ${builtins.readFile ./hypr/keybindings.conf}
-    ''; */
-
     settings = {
-     "$mod" = "SUPER";
+      "$mod" = "SUPER";
+      exec-once = [
+      ];
       bind = [
-	      "$mod, T, exec, kitty"
+        # Window/Session actions
+        "$mod, Q, exec, hyprctl kill"
+        "ALT, return, fullscreen"
+        #"$mod, L, exec, hyprlock"
+
+        # Application shortcuts
+        "$mod, T, exec, kitty"
+        "$mod SHIFT, T, exec, [float] kitty"
 	      "$mod, C, exec, chromium"
+        "$mod, E, exec, dolphin"
+
+        # Move focus with ALT + WASD
+        "ALT, A, movefocus, l"
+        "ALT, D, movefocus, r"
+        "ALT, W, movefocus, u"
+        "ALT, S, movefocus, d"
+
+        # Switch workspace with mod + [1-5]
+        "$mod, 1, workspace, 1"
+        "$mod, 2, workspace, 2"
+        "$mod, 3, workspace, 3"
+        "$mod, 4, workspace, 4"
+        "$mod, 5, workspace, 5"
+
+        # Move active window to workspace with mod + [1-5]
+        "$mod SHIFT, 1, movetoworkspace, 1"
+        "$mod SHIFT, 2, movetoworkspace, 2"
+        "$mod SHIFT, 3, movetoworkspace, 3"
+        "$mod SHIFT, 4, movetoworkspace, 4"
+        "$mod SHIFT, 5, movetoworkspace, 5"
+
+        # Toggle Window Layout
+        "$mod, J, togglesplit" #dwindle
+
+        # Scratchpad
+        "$mod, S, togglespecialworkspace"
+        "$mod SHIFT, S, movetoworkspacesilent"
+      ];
+
+      bindm = [
+        # Move/Resize windows with mainMod + LMB/RMB and dragging
+        "$mod, mouse:272, movewindow"
+        "$mod, mouse:273, resizewindow"
       ];
 
       decoration = {
@@ -98,6 +131,11 @@
         accel_profile = "flat";
       };
 
+      gestures = {
+        workspace_swipe = true;
+        workspace_swipe_fingers = 3;
+      };
+
       #env = [
         #"LIBVA_DRIVER_NAME, nvidia"
         #"__GLX_VENDOR_LIBRARY_NAME, nvidia"
@@ -107,11 +145,6 @@
      #   "XDG_CURRENT_DESKTOP,Hyprland"
      #   "XDG_SESSION_TYPE,wayland"
      #   "XDG_SESSION_DESKTOP,Hyprland"
-
-     #   "QT_QPA_PLATFORM,wayland"
-     #   "QT_QPA_PLATFORMTHEME,qt5ct"
-     #   "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-     #   "QT_AUTO_SCREEN_SCALE_FACTOR,1"
 
      #   "MOZ_ENABLE_WAYLAND,1"
      #   "WLR_NO_HARDWARE_CURSORS,1"
@@ -125,6 +158,11 @@
         "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
         "HYPRCURSOR_THEME,Bibata-Modern-Ice"
         "HYPRCURSOR_SIZE,18"
+
+        "QT_QPA_PLATFORM,wayland"
+        "QT_QPA_PLATFORMTHEME,qt5ct"
+        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
       ];
 
       monitor = [

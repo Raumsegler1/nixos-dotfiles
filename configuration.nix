@@ -119,6 +119,9 @@
     wireplumber.enable = true;
   };
 
+  # enable auth with polkit
+  security.polkit.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raumsegler = {
     isNormalUser = true;
