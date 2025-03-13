@@ -16,6 +16,10 @@
         brightness = 0.8172;
         vibrancy = 0.1696;
         vibrancy_darkness = 0.0;
+
+        #size = 9;
+        #passes = 4;
+        #vibrancy = 0.1696;
       };
 
       input-field = {

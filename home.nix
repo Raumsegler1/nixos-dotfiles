@@ -131,6 +131,7 @@
     vesktop
     kdePackages.kate
     onlyoffice-desktopeditors
+    tty-clock
 
     hyprpolkitagent
     
