@@ -13,8 +13,9 @@
       ${builtins.readFile ./hypr/theme.conf}
       ${builtins.readFile ./hypr/keybindings.conf}
     ''; */
+
     settings = {
-      "$mod" = "SUPER";
+     "$mod" = "SUPER";
       bind = [
 	      "$mod, T, exec, kitty"
 	      "$mod, C, exec, chromium"
@@ -80,7 +81,7 @@
       };
 
       misc = {
-        force_default_wallpaper = 0;
+        #force_default_wallpaper = 0;
       };
 
       input = {
@@ -97,30 +98,46 @@
         accel_profile = "flat";
       };
 
-      env = [
+      #env = [
         #"LIBVA_DRIVER_NAME, nvidia"
         #"__GLX_VENDOR_LIBRARY_NAME, nvidia"
         #"NVD_BACKEND, direct" # needs libva-nvidia-driver
-        "WLR_DRM_DEVICES,/dev/dri/card0 # Only use iGPU" # needs working amd-gpu
+        #"WLR_DRM_DEVICES,/dev/dri/card0 # Only use iGPU" # needs working amd-gpu
 
+     #   "XDG_CURRENT_DESKTOP,Hyprland"
+     #   "XDG_SESSION_TYPE,wayland"
+     #   "XDG_SESSION_DESKTOP,Hyprland"
 
-        "XDG_CURRENT_DESKTOP,Hyprland"
-        "XDG_SESSION_TYPE,wayland"
-        "XDG_SESSION_DESKTOP,Hyprland"
+     #   "QT_QPA_PLATFORM,wayland"
+     #   "QT_QPA_PLATFORMTHEME,qt5ct"
+     #   "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
+     #   "QT_AUTO_SCREEN_SCALE_FACTOR,1"
 
-        "QT_QPA_PLATFORM,wayland"
-        "QT_QPA_PLATFORMTHEME,qt5ct"
-        "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
-        "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+     #   "MOZ_ENABLE_WAYLAND,1"
+     #   "WLR_NO_HARDWARE_CURSORS,1"
+      #];
 
-        "MOZ_ENABLE_WAYLAND,1"
-        "WLR_NO_HARDWARE_CURSORS,1"
+      cursor = {
+        no_hardware_cursors =  1;
+        enable_hyprcursor = true;
+      };
+      env = [ 
+        "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
+        "HYPRCURSOR_THEME,Bibata-Modern-Ice"
+        "HYPRCURSOR_SIZE,18"
       ];
 
       monitor = [
-        ",preffered,auto,1"
-        "VGA-1,disable"
+        "WAYLAND-1,2560x1600@165Hz,auto,1"
+        #"WAYLAND-1,1280x800@165Hz,auto,1"
+
       ];
+      debug = {
+        overlay = true;
+        disable_logs = false;
+        disable_time = false;
+        enable_stdout_logs = true;
+      };
     };
   };
 }
