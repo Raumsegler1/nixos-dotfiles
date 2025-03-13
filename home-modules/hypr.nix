@@ -1,18 +1,56 @@
 {config, pkgs, ... }:
 
 {
+  programs.hyprlock = {
+    enable = true;
+    settings ={
+      general = {
+        disable_loading_bar = false;
+      };
+
+      background = {
+        blur_passes = 2; # 0 disables blurring
+        blur_size = 3;
+        noise = 0.0117;
+        contrast = 0.8916;
+        brightness = 0.8172;
+        vibrancy = 0.1696;
+        vibrancy_darkness = 0.0;
+      };
+
+      input-field = {
+        size = "200, 50";
+        outline_thickness = 3;
+        #outer_color = $color11;
+        inner_color = "rgba(0, 0, 0, 0)";
+        #font_color = $foreground;
+      };
+
+      label = {
+        text = "$TIME";
+        #color = $color5;
+        font_size = 80;
+        font_family = "CasakydiaCove Nerd Font Mono";
+        position = "0, 140";
+        halign = "center";
+        valign = "center";
+      };
+    };
+  };
+
   wayland.windowManager.hyprland = {
     enable = true;
+    plugins = [
+    ];
     xwayland.enable = true;
     settings = {
       "$mod" = "SUPER";
-      exec-once = [
-      ];
       bind = [
         # Window/Session actions
-        "$mod, Q, exec, hyprctl kill"
+        "$mod, Q, killactive"
         "ALT, return, fullscreen"
-        #"$mod, L, exec, hyprlock"
+        "$mod, W, togglefloating"
+        "$mod, L, exec, hyprlock"
 
         # Application shortcuts
         "$mod, T, exec, kitty"
@@ -52,6 +90,10 @@
         # Move/Resize windows with mainMod + LMB/RMB and dragging
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
+      ];
+
+      exec-once = [
+        "systemctl --user start hyprpolkitagent.service"
       ];
 
       decoration = {

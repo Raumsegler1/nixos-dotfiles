@@ -132,6 +132,9 @@
     kdePackages.kate
     onlyoffice-desktopeditors
 
+    hyprpolkitagent
+    
+
     # gpu
     lact
     amdgpu_top
