@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, lib, ... }:
 
 {
   imports =
@@ -77,9 +77,9 @@
       enable = true;
       settings = {
         Background = lib.cleanSource ./wallpapers/pixel_sakura.gif;
-        ScreenWidth = 2560;
-        ScreenHeigth = 1600;
-        FromPosition = "center";
+        #ScreenWidth = 2560;
+        #ScreenHeigth = 1600;
+        FormPosition = "center";
         HaveFormBackground = true;
         PartialBlur = false;
         Font = "zpix-pixel-font";       
@@ -141,7 +141,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup2"; # Makes automatic Backups in case of conflicting files
+    backupFileExtension = "back1"; # Makes automatic Backups in case of conflicting files
 
   };
 
@@ -176,7 +176,7 @@
   stylix = {
     enable = true;
     targets.grub.enable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-light.yaml";
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-lakeside-light.yaml";
     image = ./wallpapers/desktop3.png;
     #polarity = "dark"; # light
     /*fonts = {
@@ -201,7 +201,6 @@
       };
     };*/
   };
-  #config.lib.stylix.colors = {};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
