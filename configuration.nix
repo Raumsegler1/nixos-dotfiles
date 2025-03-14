@@ -16,14 +16,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
-  boot = {
-    #loader = {
-      #systemd-boot.enable = true;
-      #efi.canTouchEfiVariables = true;
-    #};
-    #kernelParams = [];
-    kernelPackages = pkgs.linuxPackages_6_12;
-  };
+  boot.kernelPackages = pkgs.linuxPackages_6_12;
 
   # Enable GRUB
   boot.loader.grub = {
@@ -80,8 +73,18 @@
     wayland = {
       enable = true;
     };
-    #theme = "/etc/nixos/sakura-sddm-theme/pixel_sakura.conf";
-    #settings = {};
+    sugarCandyNix = {
+      enable = true;
+      settings = {
+        Background = lib.cleanSource ./wallpapers/pixel_sakura.gif;
+        ScreenWidth = 2560;
+        ScreenHeigth = 1600;
+        FromPosition = "center";
+        HaveFormBackground = true;
+        PartialBlur = false;
+        Font = "zpix-pixel-font";       
+      };
+    };
   };
   services.desktopManager.plasma6.enable = true;
 
@@ -138,7 +141,7 @@
     };
     useGlobalPkgs = true;
     useUserPackages = true;
-    backupFileExtension = "backup3"; # Makes automatic Backups in case of conflicting files
+    backupFileExtension = "backup2"; # Makes automatic Backups in case of conflicting files
 
   };
 
@@ -172,10 +175,11 @@
 
   stylix = {
     enable = true;
-    #base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-hard.yaml";
+    targets.grub.enable = false;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/ayu-light.yaml";
     image = ./wallpapers/desktop3.png;
-    polarity = "light"; # dark
-    fonts = {
+    #polarity = "dark"; # light
+    /*fonts = {
       serif = {
         package = pkgs.dejavu_fonts;
         name = "DejaVu Serif";
@@ -195,11 +199,9 @@
         package = pkgs.noto-fonts-emoji;
         name = "Noto Color Emoji";
       };
-    };
+    };*/
   };
-  config.lib.stylix.colors = {
-
-  };
+  #config.lib.stylix.colors = {};
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

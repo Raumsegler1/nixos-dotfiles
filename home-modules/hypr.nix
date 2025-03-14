@@ -26,7 +26,7 @@
         size = "200, 50";
         outline_thickness = 3;
         #outer_color = $color11;
-        inner_color = "rgba(0, 0, 0, 0)";
+        #inner_color = "rgba(0, 0, 0, 0)";
         #font_color = $foreground;
       };
 

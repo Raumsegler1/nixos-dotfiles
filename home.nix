@@ -24,14 +24,14 @@
       enable = true;
       settings = {
         theme_background = false;
-        color_theme = "kyli0x";
+        #color_theme = "kyli0x";
       };
     };
     kitty = {
       enable = true;
       font = {
-        package = pkgs.nerdfonts;
-        name = "Iosevka Nerd Font";
+        #package = pkgs.nerdfonts;
+        #name = "Iosevka Nerd Font";
         size = 12;
       };
 
@@ -40,12 +40,12 @@
       settings = {
         shell = "${pkgs.fish}/bin/fish";
 
-        fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
+        #fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
         window_margin_width = 0;
         window_padding_width = 4;
         confirm_os_windows_close = 0;
 
-        background_opacity = 1;
+        #background_opacity = 1;
         sync_to_monitor = true;
         tab_bar_edge = "bottom";
         tab_bar_style = "fade";
