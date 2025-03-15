@@ -73,18 +73,19 @@
     wayland = {
       enable = true;
     };
-    sugarCandyNix = {
+    #theme = "sddm-sugar-candy-nix";
+    /*sugarCandyNix = {
       enable = true;
       settings = {
-        Background = lib.cleanSource ./wallpapers/pixel_sakura.gif;
-        #ScreenWidth = 2560;
-        #ScreenHeigth = 1600;
+        Background = lib.cleanSource ./wallpapers/pixel_sakura_static.png;
+        ScreenWidth = 2560;
+        ScreenHeight = 1600;
         FormPosition = "center";
         HaveFormBackground = true;
         PartialBlur = false;
         Font = "zpix-pixel-font";       
       };
-    };
+    };*/
   };
   services.desktopManager.plasma6.enable = true;
 
@@ -162,6 +163,7 @@
   btop
   git
   nvtopPackages.full
+  bat
   ];
 
   fonts.packages = with pkgs; [
