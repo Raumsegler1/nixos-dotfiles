@@ -94,6 +94,9 @@
       ];
       enable = true;
     };
+    librewolf = {
+      enable = true;
+    };
     vscode = {
       enable = true;
       package = pkgs.vscodium;
@@ -132,9 +135,9 @@
     kdePackages.kate
     onlyoffice-desktopeditors
     tty-clock
+    tlrc
 
-    hyprpolkitagent
-    
+    hyprpolkitagent    
 
     # gpu
     lact
