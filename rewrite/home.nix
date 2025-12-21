@@ -3,6 +3,7 @@
 {
   imports = [
     ./home-modules/hypr.nix
+    ./home-modules/waybar.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "raumsegler";

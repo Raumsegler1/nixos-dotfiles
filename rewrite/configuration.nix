@@ -35,7 +35,7 @@
   };
 
 
-  networking.hostName = "magnetar"; # Define your hostname.
+  networking.hostName = "magnetar-next"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -67,7 +67,7 @@
   # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
-  # Enable the KDE Plasma Desktop Environment.
+  # Enable the sddm login manager
   services.displayManager.sddm = {
     enable = true;
     wayland = {
@@ -75,6 +75,7 @@
     };
     theme = "sddm-astronaut-theme";
   };
+  # Enable the KDE Plasma desktop manager
   services.desktopManager.plasma6.enable = true;
 
   # Configure keymap in X11
@@ -142,6 +143,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+  inputs.matugen.packages.${system}.default
   neovim
   nh
   sddm-astronaut
@@ -154,10 +156,18 @@
   git
   nvtopPackages.full
   bat
+  twemoji-color-font
   ];
 
   fonts.packages = with pkgs; [
     zpix-pixel-font
+    noto-fonts
+    noto-fonts-cjk
+    noto-fonts-emoji
+    nerdfonts
+    twemoji-color-font
+    fira-code
+    fira-code-symbols
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = 1;

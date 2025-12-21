@@ -4,6 +4,10 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/release-24.11";
     
+    matugen = {
+      url = "github:/InioX/Matugen";
+      ref = "refs/tags/matugen-v2.4.1";
+    };
     stylix = {
       url = "github:danth/stylix/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";

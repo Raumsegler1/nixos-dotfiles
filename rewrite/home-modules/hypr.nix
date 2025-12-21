@@ -1,7 +1,7 @@
 {config, pkgs, ... }:
 
 {
-  /*programs.hyprlock = {
+  programs.hyprlock = {
     enable = true;
     settings ={
       general = {
@@ -40,7 +40,7 @@
         valign = "center";
       };
     };
-  }; */
+  }; 
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -48,8 +48,10 @@
     ];
     xwayland.enable = true;
     settings = {
-      "$mod" = "ALT";
+      "$mod" = "SUPER";
       bind = [
+        # Logout
+        "$mod SHIFT, H, exec, hyprctl dispatch exit"
         # Window/Session actions
         "$mod, Q, killactive"
         "ALT, return, fullscreen"
@@ -98,6 +100,7 @@
 
       exec-once = [
         "systemctl --user start hyprpolkitagent.service"
+        "waybar"
       ];
 
       decoration = {
