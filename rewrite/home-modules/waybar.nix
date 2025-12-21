@@ -9,14 +9,13 @@
     <* for name, value in colors *>
     @define-color {{name}} {{value.default.hex}};
     <* endfor *>
+
+    @define-color my_transparent_bg rgba({{colors.surface.default.red}}, {{colors.surface.default.green}}, {{colors.surface.default.blue}}, 0.9);
   '';
 
   # 2. THE CONFIG (The Instruction)
   # This tells Matugen where to find the template and where to save the result
   xdg.configFile."matugen/config.toml".text = ''
-    [config]
-    # General settings here if needed
-
     [templates.waybar]
     input_path = "${config.home.homeDirectory}/.config/matugen/templates/waybar.css"
     output_path = "${config.home.homeDirectory}/.config/waybar/colors.css"
@@ -26,7 +25,7 @@
   programs.waybar = {
     enable = true;
 
-programs.waybar.style = ''
+    style = ''
   /* Import Matugen colors */
   @import "${config.home.homeDirectory}/.config/waybar/colors.css";
 
@@ -39,10 +38,10 @@ programs.waybar.style = ''
   }
 
   window#waybar {
-    background-color: @rgba; /* Ensure @rgba is defined in your colors.css */
+    background-color: @my_transparent_bg;
     transition-property: background-color;
     transition-duration: 0s;
-    border: 0px solid @bg_color7;
+    border: 0px solid @primary_fixed;
     border-radius: 8px;
   }
 
@@ -71,24 +70,29 @@ programs.waybar.style = ''
     padding: 4px 15px 4px 14px;
     margin: 4px;
     border-radius: 4px;
-    background-color: @bg_workspace;
-    color: @fg_workspace;
+    background-color: @on_primary_container;
+    color: @surface;
   }
 
   #workspaces button.active {
-    color: @bg_workspace;
-    background-color: @fg_workspace;
+    background-color: @primary;
+    color: @surface;
+  }
+
+  #workspaces button.active:hover {
+    background-color: @surface;
+    color: @primary;
   }
 
   #workspaces button:hover {
     box-shadow: inherit;
     text-shadow: inherit;
-    color: @bg_workspace;
-    background-color: @fg_workspace;
+    color: @on_primary_container;
+    background-color: @surface;
   }
 
   #workspaces button.urgent {
-    background-color: @bg_color2;
+    background-color: @on_primary_container;
   }
 
   /* Common styles for right-side modules */
@@ -104,8 +108,21 @@ programs.waybar.style = ''
     border-radius: 4px;
     margin: 6px 3px;
     padding: 6px 12px;
-    background-color: @bg_workspace;
-    color: @bg_main;
+    background-color: @on_primary_container;
+    color: @surface;
+  }
+
+  #memory:hover,
+  #custom-power:hover,
+  #battery:hover,
+  #backlight:hover,
+  #wireplumber:hover,
+  #custom-pipewire:hover,
+  #network:hover,
+  #clock:hover,
+  #tray:hover {
+    background-color: @surface;
+    color: @on_primary_container;
   }
 
   #custom-logo {
@@ -114,68 +131,84 @@ programs.waybar.style = ''
     font-size: 15px;
     border-radius: 4px;
     margin: 4px 18px 4px 4px;
-    background-color: @bg_color1;
-    color: @bg_main;
-  }
-
-  #memory {
-    background-color: @bg_color3;
-  }
-
-  #battery {
-    background-color: @bg_color2;
+    background-color: @tertiary;
+    color: @surface;
   }
 
   #battery.warning,
   #battery.critical,
   #battery.urgent {
-    background-color: @bg_warn;
-    color: @fg_warn;
+    background-color: @error;
+    color: @surface;
   }
 
   #battery.charging {
-    background-color: @bg_color3;
-    color: @bg_main;
+    background-color: @primary;
+    color: @surface;
   }
 
   #backlight {
-    background-color: @bg_color4;
+    background-color: @tertiary;
+    color: @surface;
+  }
+
+  #backlight:hover {
+    background-color: @surface;
+    color: @tertiary;
   }
 
   #wireplumber,
   #custom-pipewire {
-    background-color: @bg_color5;
+    background-color: @tertiary_fixed;
   }
 
   #network {
-    background-color: @bg_color6;
+    background-color: @on_primary_container;
+    color: @surface;
     padding-right: 17px;
+  }
+
+  #network:hover {
+    background-color: @surface;
+    color: @on_primary_container;
   }
 
   #clock {
     font-family: "JetBrainsMono Nerd Font";
-    background-color: @bg_color7;
+    background-color: @tertiary_fixed;
+    color: @surface;
+  }
+
+  #clock:hover {
+    background-color: @surface;
+    color: @tertiary_fixed;
   }
 
   #custom-power {
     margin-right: 6px;
-    background-color: @bg_color8;
+    background-color: @tertiary;
+  }
+
+  #custom-power:hover {
+    margin-right: 6px;
+    background-color: @surface;
+    color: @tertiary;
   }
 
   /* Tooltips */
   tooltip {
     border-radius: 8px;
     padding: 15px;
-    background-color: @bg_color3;
-    color: @bg_main;
+    background-color: @primary;
+    color: @surface;
     text-shadow: none;
     border-color: transparent;
   }
 
   tooltip label {
     padding: 5px;
-    background-color: @bg_color3;
-    color: @bg_main;
+    background-color: @primary;
+    color: @surface;
     text-shadow: none;
   }
 
@@ -183,8 +216,8 @@ programs.waybar.style = ''
     text-shadow: none;
     border-color: transparent;
     border-width: 0px;
-  }
-'';
+  }''
+    ;
     
     settings = {
       mainBar = {
@@ -206,6 +239,7 @@ programs.waybar.style = ''
         ];
 
         modules-right = [
+          "battery"
           "tray"
           "memory"
           "network"
@@ -294,7 +328,7 @@ programs.waybar.style = ''
         };
 
         "custom/logo" = {
-          format = " ";
+          format = " ";
           tooltip = false;
           on-click = "ags -t dashboardmenu";
         };
@@ -323,7 +357,7 @@ programs.waybar.style = ''
         "custom/power" = {
           format = "󰤆";
           tooltip = false;
-          on-click = "ags -t powerdropdownmenu";
+          on-click = "hyprctl dispatch exit";
         };
 
         "custom/pipewire" = {

@@ -144,10 +144,12 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   inputs.matugen.packages.${system}.default
+  inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
   neovim
   nh
   sddm-astronaut
   wget
+  rofi
   chromium
   thunderbird
   vscodium
@@ -162,7 +164,7 @@
   fonts.packages = with pkgs; [
     zpix-pixel-font
     noto-fonts
-    noto-fonts-cjk
+    noto-fonts-cjk-sans
     noto-fonts-emoji
     nerdfonts
     twemoji-color-font

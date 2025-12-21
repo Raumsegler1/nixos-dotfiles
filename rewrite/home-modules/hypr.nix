@@ -101,6 +101,7 @@
       exec-once = [
         "systemctl --user start hyprpolkitagent.service"
         "waybar"
+        "awww-daemon"
       ];
 
       decoration = {

@@ -6,8 +6,10 @@
     
     matugen = {
       url = "github:/InioX/Matugen";
-      ref = "refs/tags/matugen-v2.4.1";
     };
+
+    awww.url = "git+https://codeberg.org/LGFae/awww";
+
     stylix = {
       url = "github:danth/stylix/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -20,7 +22,7 @@
   };
 
   # The error happened because this part was at the very top of the file
-  outputs = { self, nixpkgs, stylix, ... }@inputs: {
+  outputs = { self, nixpkgs, matugen, awww, stylix, ... }@inputs: {
     nixosConfigurations = {
       
       # === 1. OLD CONFIG (Safe) ===
