@@ -7,9 +7,9 @@
 {
   imports =
     [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./modules/gpu.nix
-      ./modules/cpu.nix
+      ../hardware-configuration.nix
+      ../modules/gpu.nix
+      ../modules/cpu.nix
       inputs.home-manager.nixosModules.default
     ];
 
@@ -119,6 +119,7 @@
     isNormalUser = true;
     description = "raumsegler";
     extraGroups = [ "networkmanager" "wheel" ];
+    initialPassword = "password";
     packages = with pkgs; [
     ];
   };
@@ -164,34 +165,6 @@
     enable = true;
   };
 
-  stylix = {
-    enable = true;
-    targets.grub.enable = false;
-    base16Scheme = "${pkgs.base16-schemes}/share/themes/atelier-lakeside-light.yaml";
-    image = ./wallpapers/desktop3.png;
-    #polarity = "dark"; # light
-    /*fonts = {
-      serif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Serif";
-      };
-
-      sansSerif = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans";
-      };
-
-      monospace = {
-        package = pkgs.dejavu_fonts;
-        name = "DejaVu Sans Mono";
-      };
-
-      emoji = {
-        package = pkgs.noto-fonts-emoji;
-        name = "Noto Color Emoji";
-      };
-    };*/
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

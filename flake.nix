@@ -15,14 +15,31 @@
     };
   };
 
+  # The error happened because this part was at the very top of the file
   outputs = { self, nixpkgs, stylix, ... }@inputs: {
-    nixosConfigurations.magnetar = nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs;};
-      modules = [
-        ./configuration.nix
-        inputs.home-manager.nixosModules.default
-        stylix.nixosModules.stylix
-      ];
+    nixosConfigurations = {
+      
+      # === 1. OLD CONFIG (Safe) ===
+      magnetar = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./configuration.nix
+          inputs.home-manager.nixosModules.default
+          stylix.nixosModules.stylix
+        ];
+      };
+
+      # === 2. NEW CONFIG (Experiment) ===
+      magnetar-next = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./rewrite/configuration.nix  # <--- Points to your new folder
+          inputs.home-manager.nixosModules.default
+        ];
+      };
+
     };
   };
 }
