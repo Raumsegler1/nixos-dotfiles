@@ -62,6 +62,7 @@
         "$mod, T, exec, kitty"
         "$mod SHIFT, T, exec, [float] kitty"
 	      "$mod, C, exec, chromium"
+        "$mod, W, exec, wallpaper-picker"
         "$mod, E, exec, dolphin"
 
         # Move focus with ALT + WASD
