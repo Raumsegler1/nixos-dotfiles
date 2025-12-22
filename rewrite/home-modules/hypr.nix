@@ -10,7 +10,7 @@
       "source" = "colors.conf";
 
       background = {
-        path = "${config.home.homeDirectory}/Pictures/Wallpapers/current.set";
+        path = "$image";
         blur_passes = 2; # 0 disables blurring
         blur_size = 3;
         noise = 0.0117;
@@ -56,7 +56,7 @@
         # Window/Session actions
         "$mod, Q, killactive"
         "ALT, return, fullscreen"
-        "$mod, W, togglefloating"
+        "$mod, F, togglefloating"
         "$mod, L, exec, hyprlock"
 
         # Application shortcuts
@@ -107,25 +107,30 @@
       ];
 
       # Window Rules
-      "windowrulev2" = "noborder, class:(kitty), floating: 0"; # hides borders for tiled kitty windows
-      "windowrulev2" = "noborder, onworkspace:w[t1]"; # hides borders if there is only one window in the workspace
-      "windowrule" = "opaque, ^(firefox)$"; # disables blur for firefox
-      "windowrule" = "opaque, ^(chromium)$"; # disables blur for chromium
-      "windowrule" = "float, ^(dolphin)$"; # sets tile on start for dolphin
-      "windowrulev2" = "rounding 0, class:(Rofi)"; # hides borders for rofi windows
+      windowrulev2 = [ 
+        "noborder, class:(kitty), floating: 0" # hides borders for tiled kitty windows
+        "noborder, onworkspace:w[t1]" # hides borders if there is only one window in the workspace
+        "rounding 0, class:(Rofi)" # hides borders for rofi windows
+      ];
+      windowrule = [
+        "opaque, ^(firefox)$" # disables blur for firefox
+        "opaque, ^(chromium-browser)$" # disables blur for chromium
+        "float, ^(org.kde.dolphin)$" # sets tile on start for dolphin
 
-      "windowrule" = "noblur,title:^(rofi - APPS)$";
-      "windowrule" = "opaque,title:^(rofi - APPS)$";
-      "windowrule" = "opaque,title:^(rofi - RUN)$";
-      "windowrule" = "noblur,title:^(rofi - RUN)$"; 
-
+        "noblur,title:^(rofi - APPS)$"
+        "opaque,title:^(rofi - APPS)$"
+        "opaque,title:^(rofi - RUN)$"
+        "noblur,title:^(rofi - RUN)$"
+      ];
       # Workspace Rules
-      "workspace" = "special,gapsin:24,gapsout:64";
+      workspace = "special,gapsin:24,gapsout:64";
 
       # Layer Rules
-      "layerrule" = "blur,logout";
-      "layerrule" = "blur, waybar";
-      "layerrule" = "ignorezero, waybar";
+      layerrule = [
+        "blur,logout"
+        "blur, waybar"
+        "ignorezero, waybar"
+      ];
 
       decoration = {
         rounding = 10;
@@ -149,8 +154,8 @@
       general = {
         gaps_in = 5;
         gaps_out = 10;
-        col.active_border = "$tertiary"; 
-        col.inactive_border = "$primary";
+        "col.active_border" = "$tertiary"; 
+        "col.inactive_border" = "$primary";
         border_size = 3;
         layout = "dwindle";
         #layout = scroller;

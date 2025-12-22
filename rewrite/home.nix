@@ -6,6 +6,7 @@
     ./home-modules/waybar.nix
     ./home-modules/rofi.nix
     ./home-modules/scripts/wallpaperselect.nix
+    ./home-modules/kitty.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "raumsegler";
@@ -28,43 +29,6 @@
       settings = {
         theme_background = false;
         #color_theme = "kyli0x";
-      };
-    };
-    kitty = {
-      enable = true;
-      font = {
-        package = pkgs.nerdfonts;
-        name = "Iosevka Nerd Font";
-        size = 12;
-      };
-
-      shellIntegration.enableFishIntegration = true;
-
-      settings = {
-        shell = "${pkgs.fish}/bin/fish";
-
-        #fonts = "JetBrainsMonoNerdFont, Iosevka Nerd Font, Noto Nerd Font";
-        window_margin_width = 0;
-        window_padding_width = 4;
-        confirm_os_windows_close = 0;
-
-        #background_opacity = 1;
-        sync_to_monitor = true;
-        tab_bar_edge = "bottom";
-        tab_bar_style = "fade";
-
-        cursor_shape = "beam";
-        cursor_beam_thickness = "4.5";
-        curso_blink_interval = 0;
-
-        detect_urls = true;
-        url_color = "#0087bd";
-        url_style = "curly";
-
-        enable_audio_bell = false;
-
-        scrollback_lines = 1500;
-        wheel_scroll_multiplier = "10.0";
       };
     };
     fish = {
@@ -107,6 +71,7 @@
       enableUpdateCheck =true;
       extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide # version doesnt match with vscodium
+        kamikillerto.vscode-colorize
 
       ];
       userSettings = {
