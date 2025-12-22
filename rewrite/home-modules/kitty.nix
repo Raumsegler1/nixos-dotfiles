@@ -4,7 +4,7 @@
   programs.kitty = {
       enable = true;
       font = {
-        package = pkgs.nerdfonts;
+        package = pkgs.nerd-fonts.iosevka;
         name = "Iosevka Nerd Font";
         size = 12;
       };

@@ -17,7 +17,7 @@
       # No overrides needed. Pure and simple.
       SELECTED_FILE=$(find -L "$WALLPATH" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) -exec basename {} \; | sort | while read -r rfile; do
           echo -en "$rfile\0icon\x1f$WALLPATH/$rfile\n"
-      done | ${pkgs.rofi-wayland}/bin/rofi -dmenu -i -show-icons -config "$ROFI_CONF" -p "Wallpaper")
+      done | ${pkgs.rofi}/bin/rofi -dmenu -i -show-icons -config "$ROFI_CONF" -p "Wallpaper")
 
       # --- APPLY ---
       if [ -n "$SELECTED_FILE" ]; then

@@ -6,12 +6,11 @@
     
     matugen = {
       url = "github:/InioX/Matugen";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    awww.url = "git+https://codeberg.org/LGFae/awww";
-
-    stylix = {
-      url = "github:danth/stylix/release-24.11";
+    awww = {
+      url = "git+https://codeberg.org/LGFae/awww";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -19,10 +18,15 @@
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    quickshell = {
+      url = "github:quickshell-mirror/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # The error happened because this part was at the very top of the file
-  outputs = { self, nixpkgs, matugen, awww, stylix, ... }@inputs: {
+  outputs = { self, nixpkgs, quickshell, matugen, awww, ... }@inputs: {
     nixosConfigurations = {
       
       # === 1. OLD CONFIG (Safe) ===
@@ -32,7 +36,6 @@
         modules = [
           ./configuration.nix
           inputs.home-manager.nixosModules.default
-          stylix.nixosModules.stylix
         ];
       };
 
@@ -41,7 +44,7 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          ./rewrite/configuration.nix  # <--- Points to your new folder
+          ./rewrite/configuration.nix 
           inputs.home-manager.nixosModules.default
         ];
       };

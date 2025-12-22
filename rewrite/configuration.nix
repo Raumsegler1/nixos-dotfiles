@@ -95,7 +95,7 @@
   hardware.bluetooth.enable = true;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false; # Disable PulseAudio
+  services.pulseaudio.enable = false; # Disable PulseAudio
   security.rtkit.enable = true;       # Enable real-time support
   services.pipewire = {
     enable = true;                     # Enable PipeWire
@@ -145,6 +145,7 @@
   environment.systemPackages = with pkgs; [
   inputs.matugen.packages.${system}.default
   inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
+  inputs.quickshell.packages.${system}.default
   neovim
   nh
   sddm-astronaut
@@ -166,11 +167,9 @@
     zpix-pixel-font
     noto-fonts
     noto-fonts-cjk-sans
-    noto-fonts-emoji
-    nerdfonts
+    noto-fonts-color-emoji
+    nerd-fonts.fira-code
     twemoji-color-font
-    fira-code
-    fira-code-symbols
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = 1;

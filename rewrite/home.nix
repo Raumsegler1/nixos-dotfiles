@@ -16,9 +16,11 @@
   programs = {
     git = {
       enable = true;
-      userName = "Raumsegler1";
-      userEmail = "113139832+Raumsegler1@users.noreply.github.com";
-      extraConfig = {
+      settings = {
+        user = {
+          name = "Raumsegler1";
+          email = "113139832+Raumsegler1@users.noreply.github.com";      
+        };
         pull.rebase = false;
         init.defaultBranch = "main";
         safe.directory = "/etc/nixos";
@@ -64,19 +66,22 @@
     librewolf = {
       enable = true;
     };
-    vscode = {
-      enable = true;
-      package = pkgs.vscodium;
+    vscode.profiles.default = {
       enableExtensionUpdateCheck = false;
       enableUpdateCheck =true;
       extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide # version doesnt match with vscodium
         kamikillerto.vscode-colorize
+        #theqtcompany.qt-qml
 
       ];
       userSettings = {
-
+        #"qt-qml.qmlls.useQmlImportPathEnvVar" = "true";
       };
+    };
+    vscode = {
+      enable = true;
+      package = pkgs.vscodium;
     };
   };
 
