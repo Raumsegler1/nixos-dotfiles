@@ -7,8 +7,10 @@
       general = {
         disable_loading_bar = false;
       };
+      "source" = "colors.conf";
 
       background = {
+        path = "${config.home.homeDirectory}/Pictures/Wallpapers/current.set";
         blur_passes = 2; # 0 disables blurring
         blur_size = 3;
         noise = 0.0117;
@@ -16,23 +18,21 @@
         brightness = 0.8172;
         vibrancy = 0.1696;
         vibrancy_darkness = 0.0;
-
-        #size = 9;
-        #passes = 4;
-        #vibrancy = 0.1696;
+        size = 9;
+        passes = 4;
       };
 
       input-field = {
         size = "200, 50";
         outline_thickness = 3;
-        #outer_color = $color11;
-        #inner_color = "rgba(0, 0, 0, 0)";
-        #font_color = $foreground;
+        outer_color = "$outline";
+        inner_color = "$surface";
+        font_color = "$primary";
       };
 
       label = {
         text = "$TIME";
-        #color = $color5;
+        color = "$tertiary";
         font_size = 80;
         font_family = "CasakydiaCove Nerd Font Mono";
         position = "0, 140";
@@ -48,6 +48,7 @@
     ];
     xwayland.enable = true;
     settings = {
+      "source" = "colors.conf";
       "$mod" = "SUPER";
       bind = [
         # Logout
@@ -105,6 +106,27 @@
         "awww-daemon"
       ];
 
+      # Window Rules
+      "windowrulev2" = "noborder, class:(kitty), floating: 0"; # hides borders for tiled kitty windows
+      "windowrulev2" = "noborder, onworkspace:w[t1]"; # hides borders if there is only one window in the workspace
+      "windowrule" = "opaque, ^(firefox)$"; # disables blur for firefox
+      "windowrule" = "opaque, ^(chromium)$"; # disables blur for chromium
+      "windowrule" = "float, ^(dolphin)$"; # sets tile on start for dolphin
+      "windowrulev2" = "rounding 0, class:(Rofi)"; # hides borders for rofi windows
+
+      "windowrule" = "noblur,title:^(rofi - APPS)$";
+      "windowrule" = "opaque,title:^(rofi - APPS)$";
+      "windowrule" = "opaque,title:^(rofi - RUN)$";
+      "windowrule" = "noblur,title:^(rofi - RUN)$"; 
+
+      # Workspace Rules
+      "workspace" = "special,gapsin:24,gapsout:64";
+
+      # Layer Rules
+      "layerrule" = "blur,logout";
+      "layerrule" = "blur, waybar";
+      "layerrule" = "ignorezero, waybar";
+
       decoration = {
         rounding = 10;
         #drop_shadow = false
@@ -127,6 +149,8 @@
       general = {
         gaps_in = 5;
         gaps_out = 10;
+        col.active_border = "$tertiary"; 
+        col.inactive_border = "$primary";
         border_size = 3;
         layout = "dwindle";
         #layout = scroller;
@@ -220,8 +244,6 @@
 
       monitor = [
         "WAYLAND-1,2560x1600@165Hz,auto,1"
-        #"WAYLAND-1,1280x800@165Hz,auto,1"
-
       ];
       debug = {
         overlay = false;
@@ -231,4 +253,22 @@
       };
     };
   };
+  # Matugen config for hyprland
+  # This tells Matugen how to write the conf file
+  xdg.configFile."matugen/templates/hyprland-colors.conf".text = ''
+    $image = {{image}}
+    <* for name, value in colors *>
+    ''${{name}} = rgba({{value.default.hex_stripped}}ff)
+    <* endfor *>
+    '';
+
+  # 2. THE CONFIG (The Instruction)
+  # This tells Matugen where to find the template and where to save the result
+  xdg.configFile."matugen/config.toml".text = ''
+    [templates.hyprland]
+    input_path = '${config.home.homeDirectory}/.config/matugen/templates/hyprland-colors.conf'
+    output_path = '${config.home.homeDirectory}/.config/hypr/colors.conf'
+    post_hook = 'hyprctl reload'
+  '';
+
 }

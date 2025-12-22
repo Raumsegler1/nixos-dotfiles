@@ -150,6 +150,7 @@
   sddm-astronaut
   wget
   rofi
+  ffmpeg
   chromium
   thunderbird
   vscodium

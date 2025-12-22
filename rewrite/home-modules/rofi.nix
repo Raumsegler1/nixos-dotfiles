@@ -33,7 +33,7 @@
   '';
 
   # 3. ROFI CONFIG
-  xdg.configFile."~/.config/rofi/launcher.rasi".text = ''
+  xdg.configFile."rofi/launcher.rasi".text = ''
 /*****----- Configuration -----*****/
 configuration {
 	modi:                       "drun,run";
@@ -237,7 +237,7 @@ error-message {
   '';
 
     # 3. ROFI CONFIG
-  xdg.configFile."~/.config/rofi/wallpaper.rasi".text = ''
+  xdg.configFile."rofi/wallpaper.rasi".text = ''
    configuration {
         modi: "drun";
         show-icons: true;
