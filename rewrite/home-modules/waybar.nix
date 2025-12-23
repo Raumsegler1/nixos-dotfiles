@@ -243,7 +243,7 @@
           "tray"
           "memory"
           "network"
-          "custom/pipewire"
+          "wireplumper"
           "custom/power"
         ];
 
@@ -294,7 +294,7 @@
 
         clock = {
           tooltip-format = "{calendar}";
-          format = "  {:%H:%M}";
+          format = "  {:%H:%M}";
           on-click = "ags -t calendarmenu";
         };
 
@@ -328,7 +328,7 @@
         };
 
         "custom/logo" = {
-          format = " ";
+          format = " ";
           tooltip = false;
           on-click = "ags -t dashboardmenu";
         };
@@ -361,7 +361,7 @@
         };
 
         "custom/pipewire" = {
-          exec = "pw-volume status";
+          exec = "wpctl get-volume @DEFAULT_AUDIO_SINK@";
           return-type = "json";
           interval = "once";
           signal = 8;

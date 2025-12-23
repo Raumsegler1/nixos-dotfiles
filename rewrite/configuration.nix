@@ -16,7 +16,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Bootloader
-  boot.kernelPackages = pkgs.linuxPackages_6_12;
+  boot.kernelPackages = pkgs.linuxPackages_6_18;
 
   # Enable GRUB
   boot.loader.grub = {
@@ -143,22 +143,30 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  inputs.matugen.packages.${system}.default
+  inputs.matugen.packages.${stdenv.hostPlatform.system}.default
   inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
-  inputs.quickshell.packages.${system}.default
+  (inputs.quickshell.packages.${stdenv.hostPlatform.system}.default.withModules [
+    qt6.qtsvg
+    qt6.qtimageformats
+    qt6.qtmultimedia
+    qt6.qt5compat
+  ])
   neovim
   nh
   sddm-astronaut
+  #for sddm to work
+  qt6.qtmultimedia
+  qt6.qt5compat
+  qt6.qtsvg
+
   wget
   rofi
   ffmpeg
   chromium
-  thunderbird
   vscodium
   lshw
   btop
   git
-  nvtopPackages.full
   bat
   twemoji-color-font
   ];
@@ -166,9 +174,9 @@
   fonts.packages = with pkgs; [
     zpix-pixel-font
     noto-fonts
-    noto-fonts-cjk-sans
-    noto-fonts-color-emoji
-    nerd-fonts.fira-code
+    noto-fonts-cjk-sans    
+     noto-fonts-color-emoji # for 25.11
+     nerd-fonts.fira-code
     twemoji-color-font
   ];
 

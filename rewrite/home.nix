@@ -7,6 +7,7 @@
     ./home-modules/rofi.nix
     ./home-modules/scripts/wallpaperselect.nix
     ./home-modules/kitty.nix
+    ./home-modules/starship.nix
   ];
   # Home Manager needs a bit of information about you and the paths it should manage.
   home.username = "raumsegler";
@@ -35,22 +36,24 @@
     };
     fish = {
       enable = true;
-      plugins = [];
-    };
-    starship = {
-      enable = true;
-      enableFishIntegration = true;
-      # Configuration written to ~/.config/starship.toml
-      settings = {
-        # add_newline = false;
-
-        # character = {
-        #   success_symbol = "[➜](bold green)";
-        #   error_symbol = "[➜](bold red)";
-        # };
-
-        # package.disabled = true;
+      functions = {
+        fish_right_prompt = "mommy -1 -s $status";
       };
+
+      # 2. Define Abbreviations
+      shellAbbrs = {
+        ".."     = "cd ..";
+        "..."    = "cd ../..";
+        "...."   = "cd ../../..";
+        "....."  = "cd ../../../..";
+        "......" = "cd ../../../../..";
+        "ls"     = "lsd";
+        "home"   = "cd /etc/nixos/";
+      };
+      interactiveShellInit = ''
+      set fish_greeting # Disable greetings
+      '';
+      plugins = [];
     };
     chromium = {
       extensions = [
@@ -72,11 +75,20 @@
       extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide # version doesnt match with vscodium
         kamikillerto.vscode-colorize
-        #theqtcompany.qt-qml
+        (pkgs.vscode-utils.buildVscodeMarketplaceExtension {
+          mktplcRef = {
+            name = "qt-qml";
+            publisher = "TheQtCompany";
+            version = "1.10.0";
+            sha256 = "sha256-5k80WTSDwdf3WeePUt2CgTd3dTejj0+fKnbjzNfMXng="; 
+          };
+        })
 
       ];
       userSettings = {
-        #"qt-qml.qmlls.useQmlImportPathEnvVar" = "true";
+        "qt-qml.qmlls.useQmlImportPathEnvVar" = true;
+        "editor.fontFamily" = "'FiraCode Nerd Font', 'Fira Code', monospace";
+        "terminal.integrated.fontFamily" = "'FiraCode Nerd Font', 'Fira Code', monospace";
       };
     };
     vscode = {
@@ -84,8 +96,7 @@
       package = pkgs.vscodium;
     };
   };
-
-/*  gtk = {
+  gtk = {
     enable = true;
     theme = {
       name    = "Breeze";
@@ -100,17 +111,19 @@
       package = pkgs.candy-icons;
     };
   };
-*/
+
   # The home.packages option allows you to install Nix packages into your environment.
   home.packages = with pkgs; [
-    thunderbird
+    thunderbird-bin
     vesktop
     kdePackages.kate
     onlyoffice-desktopeditors
     tty-clock
+    cava
     tlrc
-
-    hyprpolkitagent    
+    hyprpolkitagent
+    lsd # next gen ls
+    mommy # fish prompt    
 
     # gpu
     lact

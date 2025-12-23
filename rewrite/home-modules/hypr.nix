@@ -64,7 +64,8 @@
         "$mod SHIFT, T, exec, [float] kitty"
 	      "$mod, C, exec, chromium"
         "$mod, W, exec, wallpaper-picker"
-        "$mod, E, exec, dolphin"
+        "$mod, D, exec, dolphin"
+        "$mod, V, exec, codium"
 
         # Move focus with ALT + WASD
         "ALT, A, movefocus, l"
@@ -106,22 +107,30 @@
         "awww-daemon"
       ];
 
-      # Window Rules
-      windowrulev2 = [ 
-        "noborder, class:(kitty), floating: 0" # hides borders for tiled kitty windows
-        "noborder, onworkspace:w[t1]" # hides borders if there is only one window in the workspace
-        "rounding 0, class:(Rofi)" # hides borders for rofi windows
-      ];
-      windowrule = [
-        "opaque, ^(firefox)$" # disables blur for firefox
-        "opaque, ^(chromium-browser)$" # disables blur for chromium
-        "float, ^(org.kde.dolphin)$" # sets tile on start for dolphin
 
-        "noblur,title:^(rofi - APPS)$"
-        "opaque,title:^(rofi - APPS)$"
-        "opaque,title:^(rofi - RUN)$"
-        "noblur,title:^(rofi - RUN)$"
+      windowrule = [
+      # Syntax: EFFECT, CONDITIONS
+      # 1. Hide borders for tiled kitty (class:kitty AND floating:0)
+        "bordersize 0, floating:0, class:^(kitty)$"
+      # 2. Hide borders if only 1 window (using workspace selector)
+        "bordersize 0, floating:0, onworkspace:w[t1]"
+      # 3. Rofi fixes
+        "rounding 0, class:^(Rofi)$"
+        "bordersize 0, class:^(Rofi)$"
+      # 4. Disable transparency/blur for browsers
+        "opaque, class:^(firefox)$"
+        "noblur, class:^(firefox)$"
+        "opaque, class:^(chromium-browser)$"
+        "noblur, class:^(chromium-browser)$"
+      # 5. Dolphin starts floating
+        "float, class:^(org.kde.dolphin)$"
+      # 6. Specific Rofi titles (Use title: regex)
+        "noblur, title:^(rofi - APPS)$"
+        "opaque, title:^(rofi - APPS)$"
+        "noblur, title:^(rofi - RUN)$"
+        "opaque, title:^(rofi - RUN)$"
       ];
+
       # Workspace Rules
       workspace = "special,gapsin:24,gapsout:64";
 
@@ -130,6 +139,7 @@
         "blur,logout"
         "blur, waybar"
         "ignorezero, waybar"
+        "blur, rofi"
       ];
 
       decoration = {
@@ -160,6 +170,10 @@
         layout = "dwindle";
         #layout = scroller;
         resize_on_border = true;
+        snap = {
+          enabled = true;
+          respect_gaps = true;
+        };
       };
 
       dwindle = {
@@ -205,16 +219,18 @@
         follow_mouse = 1;
         touchpad = {
           natural_scroll = "yes"; 
+          clickfinger_behavior = true;
         };
 
         #sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
         accel_profile = "flat";
       };
 
-      gestures = {
-        workspace_swipe = true;
-        workspace_swipe_fingers = 3;
-      };
+      "gesture" = [
+        "3, horizontal, workspace"
+        #"3, down, dispatcher, app"
+      ];
+
 
       #env = [
         #"LIBVA_DRIVER_NAME, nvidia"

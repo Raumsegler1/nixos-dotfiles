@@ -250,15 +250,14 @@ error-message {
     window {
         enabled: true;
         fullscreen: false;
-        width: 80%;
-        height: 80%;
+        width: 100%;
         transparency: "real";
         cursor: "default";
         spacing: 0px;
         padding: 0px;
-        border: 2px solid;
+        border: 0px solid;
         border-color: @border-color;
-        border-radius: 12px;
+        border-radius: 0px;
         background-color: transparent;
     }
 
@@ -270,48 +269,55 @@ error-message {
 
     listview {
         enabled: true;
-        columns: 5;
-        lines: 3;
-        spacing: 20px;
-        padding: 20px;
+        layout: vertical;
+        lines: 2;
+        columns: 6;
+        fixed-columns: true;
+        spacing: 5px;
+        padding: 25px;
         cycle: true;
         dynamic: false;
         scrollbar: false;
-        layout: vertical;
         reverse: false;
         cursor: "default";
         background-color: transparent;
         text-color: @main-fg;
+        align-items: center;
     }
 
     element {
+        width: 16.66%;        
+        halign: center;
         enabled: true;
         orientation: vertical;
-        padding: 10px;
+        padding: 20px;
+        spacing: 30px;
         cursor: pointer;
         background-color: transparent;
         text-color: @main-fg;
-        border-radius: 8px;
+        border-radius: 0px;
     }
 
     element selected.normal {
         background-color: @select-bg;
         text-color: @select-fg;
-        border-color: @select-bg;
-        border: 0px solid;
+        border-color: @border-color;
+        border: 2px solid;
+        border-radius: 4px;
     }
 
     element-icon {
-        size: 256px;
+        size: 20%;
         horizontal-align: 0.5;
+        vertical-align: 0.5;
         cursor: inherit;
-        border-radius: 10px;
         background-color: transparent;
         text-color: inherit;
-        margin: 0px 0px 10px 0px;
     }
 
     element-text {
+        padding: 40px 10px 20px;
+        height: 20%;
         vertical-align: 0.5;
         horizontal-align: 0.5;
         cursor: inherit;
