@@ -105,6 +105,8 @@
       ];
       userSettings = {
         "qt-qml.qmlls.useQmlImportPathEnvVar" = true;
+        "extensions.autoCheckUpdates" = false;
+        "security.workspace.trust.untrustedFiles" =  "open";
         "editor.fontFamily" = "'FiraCode Nerd Font', 'Fira Code', monospace";
         "terminal.integrated.fontFamily" = "'FiraCode Nerd Font', 'Fira Code', monospace";
       };
