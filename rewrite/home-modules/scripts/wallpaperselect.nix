@@ -17,7 +17,7 @@
       # CHANGE: Used -printf "%P\n" to keep the subfolder structure (e.g. "Anime/ghibli.jpg")
       SELECTED_FILE=$(find -L "$WALLPATH" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.webp" -o -iname "*.gif" \) -printf "%P\n" | sort | while read -r rfile; do
           echo -en "$rfile\0icon\x1f$WALLPATH/$rfile\n"
-      done | ${pkgs.rofi}/bin/rofi -dmenu -i -show-icons -config "$ROFI_CONF" -p "Wallpaper")
+      done | ${pkgs.rofi}/bin/rofi -dmenu -i -show-icons -config "$ROFI_CONF" -p "Wallpaper" -name "wallpaper-picker")
 
       # --- APPLY ---
       if [ -n "$SELECTED_FILE" ]; then
@@ -26,7 +26,8 @@
           awww img "$FULL_PATH" --transition-type grow --transition-pos top-right --transition-duration 2 --transition-fps 60
           ln -sf "$FULL_PATH" "$WALLPATH/current.set"
           
-          matugen image "$FULL_PATH"
+          #automatugen "$FULL_PATH" -t scheme-rainbow --contrast 0.1  
+          matugen image "$FULL_PATH" -t scheme-rainbow --contrast 0.1  
       fi
     '')
   ];

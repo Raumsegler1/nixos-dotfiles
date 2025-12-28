@@ -40,19 +40,74 @@
         valign = "center";
       };
     };
-  }; 
+  };
+
+  services = {
+    hyprpolkitagent.enable = true;
+    hyprsunset = {
+      enable = true;
+      settings = {
+        #look in homemanager wiki
+      };
+    };
+    hypridle = {
+      enable = true;
+      settings = {
+        /*general = {
+          after_sleep_cmd = "hyprctl dispatch dpms on";
+          ignore_dbus_inhibit = false;
+          lock_cmd = "hyprlock";
+        };
+
+        listener = [
+          {
+            timeout = 900;
+            on-timeout = "hyprlock";
+          }
+          {
+            timeout = 1200;
+            on-timeout = "hyprctl dispatch dpms off";
+            on-resume = "hyprctl dispatch dpms on";
+          }
+        ];*/
+      };
+    };
+  };
+
+  home.packages = with pkgs; [
+    # Hyprland utilities
+    hyprsysteminfo  # systeminfo gui 
+    hyprpwcenter    # audio/pipewire gui
+    hyprtoolkit     # customization for other utilities
+    hyprshot        # screenshot tool
+    hyprpicker      # color picker
+    #hyprshutdown is in configuration.nix
+  ];
 
   wayland.windowManager.hyprland = {
+    systemd.enable = false;
     enable = true;
-    plugins = [
+    plugins = with pkgs.hyprlandPlugins; [
+      hyprspace
     ];
     xwayland.enable = true;
     settings = {
       "source" = "colors.conf";
       "$mod" = "SUPER";
+
+      "xwayland:force_zero_scaling" = true; #fix for onlyoffice
       bind = [
         # Logout
-        "$mod SHIFT, H, exec, hyprctl dispatch exit"
+        "$mod SHIFT, H, exec, hyprshutdown"
+
+        # Touchpad toggle
+        '',XF86TouchpadToggle, exec, sh -c 'if [ -f /tmp/tp_off ]; then hyprctl keyword "device[asup1208:00-093a:3011-touchpad]:enabled" true && rm /tmp/tp_off && dunstify -r 4 "Touchpad" "Enabled"; else hyprctl keyword "device[asup1208:00-093a:3011-touchpad]:enabled" false && touch /tmp/tp_off && dunstify -r 4 "Touchpad" "Disabled"; fi' ''       
+        
+        # Screenshots using Hyprshot
+        "$mod, ALT, exec, hyprshot -m window"      # screenshot window
+        "$mod SHIFT, P, exec, hyprshot -m output"  # screenshot monitor
+        "$mod, P, exec, hyprshot -m region"        # screenshot region  # fn + f9 also does mod + p
+
         # Window/Session actions
         "$mod, Q, killactive"
         "ALT, return, fullscreen"
@@ -60,10 +115,14 @@
         "$mod, L, exec, hyprlock"
 
         # Application shortcuts
+        #",XF86Launch4, exec,"  # ASUS Aura Button 
+        ",XF86Launch3, exec, hyprctl dispatch dpms toggle" # ASUS Armoury (Key next to mic mute) // Turns off/on screen
+        #",XF86Assist, exec, wofi --show drun" #copilot button
         "$mod, T, exec, kitty"
         "$mod SHIFT, T, exec, [float] kitty"
 	      "$mod, C, exec, chromium"
         "$mod, W, exec, wallpaper-picker"
+        "$mod, R, exec, rofi -config ~/.config/rofi/launcher.rasi -show drun"
         "$mod, D, exec, dolphin"
         "$mod, V, exec, codium"
 
@@ -73,27 +132,40 @@
         "ALT, W, movefocus, u"
         "ALT, S, movefocus, d"
 
-        # Switch workspace with mod + [1-5]
-        "$mod, 1, workspace, 1"
-        "$mod, 2, workspace, 2"
-        "$mod, 3, workspace, 3"
-        "$mod, 4, workspace, 4"
-        "$mod, 5, workspace, 5"
-
-        # Move active window to workspace with mod + [1-5]
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-
         # Toggle Window Layout
         "$mod, J, togglesplit" #dwindle
 
         # Scratchpad
         "$mod, S, togglespecialworkspace"
         "$mod SHIFT, S, movetoworkspacesilent"
+      ]
+      ++ (
+      # Create lists for workspaces 1-9
+        builtins.concatLists (builtins.genList (
+           x: let
+              ws = toString (x + 1);
+           in [
+              "$mod, ${ws}, workspace, ${ws}"                # Switch workspace with mod + [1-5]
+              "$mod SHIFT, ${ws}, movetoworkspace, ${ws}"    # Move active window to workspace with mod + [1-5]
+            ]
+        ) 9)
+      );
+
+      binde = [
+        # --- Volume (wpctl)(dunstify ID 1) ---
+        '', XF86AudioRaiseVolume, exec, wpctl set-volume -l 2.0 @DEFAULT_AUDIO_SINK@ 5%+ && sh -c 'vol=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk "{print int(\$2 * 100)}"); dunstify "Volume: ''${vol}%" -h int:value:$vol -r 1 -t 1000 -a "Audio" -u low' ''
+        '', XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && sh -c 'vol=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk "{print int(\$2 * 100)}"); dunstify "Volume: ''${vol}%" -h int:value:$vol -r 1 -t 1000 -a "Audio" -u low' ''
+
+        # --- Brightness (brightnessctl)(dunstify ID 2) ---
+        '', XF86MonBrightnessUp, exec, brightnessctl set 5%+ && sh -c 'val=$(brightnessctl -m | cut -d, -f4 | tr -d %); dunstify "''${val}%" -h int:value:$val -r 2 -t 1000 -a "Brightness  " -u low' ''
+        '', XF86MonBrightnessDown, exec, brightnessctl set 5%- && sh -c 'val=$(brightnessctl -m | cut -d, -f4 | tr -d %); dunstify "''${val}%" -h int:value:$val -r 2 -t 1000 -a "Brightness  " -u low' ''
       ];
+
+      bindl = [
+        # --- Mute (wpctl)(dunstify: audio ID 1; mic ID 3) ---
+        '',XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle && dunstify -a "Audio" -u low -r 1 -t 1000 "$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED && echo 'Muted  ' || wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print "Unmuted  : " int($2 * 100) "%"}')"''
+        '',XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle && dunstify -a "Audio" -u low -r 3 -t 1000 "Microphone" "$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED && echo 'Muted  ' || echo 'Unmuted  ')"''
+  ];
 
       bindm = [
         # Move/Resize windows with mainMod + LMB/RMB and dragging
@@ -102,11 +174,22 @@
       ];
 
       exec-once = [
-        "systemctl --user start hyprpolkitagent.service"
-        "waybar"
-        "awww-daemon"
+        #"systemctl --user start hyprpolkitagent.service"
+        "uwsm app -- waybar"
+        "uwsm app -- awww-daemon"
+        "wl-paste --watch cliphist store"
+        "uwsm app -- dunst"
+        "XDG_MENU_PREFIX=plasma- kbuildsycoca6"
+        "uwsm app -- dunst"
       ];
 
+      # Layer Rules
+      layerrule = [
+        "blur,logout"
+        "blur, waybar"
+        "ignorezero, waybar"
+        "blur, rofi"
+      ];
 
       windowrule = [
       # Syntax: EFFECT, CONDITIONS
@@ -118,29 +201,16 @@
         "rounding 0, class:^(Rofi)$"
         "bordersize 0, class:^(Rofi)$"
       # 4. Disable transparency/blur for browsers
-        "opaque, class:^(firefox)$"
-        "noblur, class:^(firefox)$"
+        "opaque, class:^(librewolf)$"
+        "noblur, class:^(librewolf)$"
         "opaque, class:^(chromium-browser)$"
         "noblur, class:^(chromium-browser)$"
       # 5. Dolphin starts floating
         "float, class:^(org.kde.dolphin)$"
-      # 6. Specific Rofi titles (Use title: regex)
-        "noblur, title:^(rofi - APPS)$"
-        "opaque, title:^(rofi - APPS)$"
-        "noblur, title:^(rofi - RUN)$"
-        "opaque, title:^(rofi - RUN)$"
       ];
 
       # Workspace Rules
       workspace = "special,gapsin:24,gapsout:64";
-
-      # Layer Rules
-      layerrule = [
-        "blur,logout"
-        "blur, waybar"
-        "ignorezero, waybar"
-        "blur, rofi"
-      ];
 
       decoration = {
         rounding = 10;
@@ -223,13 +293,17 @@
         };
 
         #sensitivity = -0.3; # -1.0 - 1.0, 0 means no modification.
-        accel_profile = "flat";
+        accel_profile = "adaptive";
       };
 
       "gesture" = [
         "3, horizontal, workspace"
-        #"3, down, dispatcher, app"
+        #"3, up, dispatcher, app"
       ];
+
+      gestures = {
+        workspace_swipe_forever = true;
+      };
 
 
       #env = [
@@ -251,16 +325,21 @@
         enable_hyprcursor = true;
       };
       env = [ 
+        "HYPRSHOT_DIR,/home/raumsegler/Pictures/Screenshots"
         "WLR_RENDERER_ALLOW_SOFTWARE,1"
         "WLR_NO_HARDWARE_CURSORS,1"
         "AQ_DRM_DEVICES,/dev/dri/card0:/dev/dri/card1"
         "HYPRCURSOR_THEME,Bibata-Modern-Ice"
+        "XCURSOR_THEME,Bibata-Modern-Ice"
         "HYPRCURSOR_SIZE,18"
+        "XCURSOR_SIZE,18"                     
 
         "QT_QPA_PLATFORM,wayland"
         "QT_QPA_PLATFORMTHEME,qt5ct"
         "QT_WAYLAND_DISABLE_WINDOWDECORATION,1"
         "QT_AUTO_SCREEN_SCALE_FACTOR,1"
+
+        "XDG_MENU_PREFIX,plasma-"
       ];
 
       monitor = [

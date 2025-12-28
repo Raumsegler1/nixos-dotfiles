@@ -37,6 +37,7 @@
         url_style = "curly";
 
         enable_audio_bell = false;
+        confirm_os_window_close = 0;
 
         scrollback_lines = 1500;
         wheel_scroll_multiplier = "10.0";

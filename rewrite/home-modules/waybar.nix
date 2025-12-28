@@ -135,6 +135,13 @@
     color: @surface;
   }
 
+  #battery.warning:hover,
+  #battery.critical:hover,
+  #battery.urgent:hover {
+    background-color: @surface;
+    color: @error;
+  }
+
   #battery.warning,
   #battery.critical,
   #battery.urgent {
@@ -145,6 +152,11 @@
   #battery.charging {
     background-color: @primary;
     color: @surface;
+  }
+
+  #battery.charging:hover {
+    background-color: @surface;
+    color: @primary;
   }
 
   #backlight {
@@ -239,18 +251,18 @@
         ];
 
         modules-right = [
+          "wireplumber"
           "battery"
           "tray"
           "memory"
           "network"
-          "wireplumper"
           "custom/power"
         ];
 
         "wlr/taskbar" = {
           format = "{icon}";
           on-click = "activate";
-          on-click-right = "fullscreen";
+          on-click-right = "activate";
           icon-theme = "";
           icon-size = 25;
           tooltip-format = "{title}";
@@ -284,7 +296,7 @@
 
         memory = {
           interval = 5;
-          format = "󰍛 {}%";
+          format = "󰍛  {}%";
           max-length = 10;
         };
 
@@ -295,7 +307,7 @@
         clock = {
           tooltip-format = "{calendar}";
           format = "  {:%H:%M}";
-          on-click = "ags -t calendarmenu";
+          on-click = "";
         };
 
         network = {
@@ -307,34 +319,20 @@
           tooltip-format-wifi = "{icon} {essid}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
           tooltip-format-ethernet = "󰀂  {ifname}\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}";
           tooltip-format-disconnected = "Disconnected";
-          on-click = "ags -t networkmenu";
+          on-click = "";
           on-click-right = "";
           interval = 5;
           nospacing = 1;
         };
 
-        wireplumber = {
-          format = "{icon}";
-          format-bluetooth = "󰂰";
-          nospacing = 1;
-          tooltip-format = "Volume : {volume}%";
-          format-muted = "󰝟";
-          format-icons = {
-            headphone = "";
-            default = [ "󰖀" "󰕾" "" ];
-          };
-          on-click = "ags -t audiomenu";
-          scroll-step = 1;
-        };
-
         "custom/logo" = {
           format = " ";
           tooltip = false;
-          on-click = "ags -t dashboardmenu";
+          on-click = "";
         };
 
         battery = {
-          format = "{capacity}% {icon}";
+          format = "{icon}  {capacity}%";
           format-icons = {
             charging = [
               "󰢜" "󰂆" "󰂇" "󰂈" "󰢝" 
@@ -357,20 +355,15 @@
         "custom/power" = {
           format = "󰤆";
           tooltip = false;
-          on-click = "hyprctl dispatch exit";
+          on-click = "hyprshutdown";
         };
 
-        "custom/pipewire" = {
-          exec = "wpctl get-volume @DEFAULT_AUDIO_SINK@";
-          return-type = "json";
-          interval = "once";
-          signal = 8;
-          on-click = "ags -t audiomenu";
-          format = "{icon} {percentage}%";
-          format-icons = {
-            mute = "";
-            default = [ "󰕿" "󰖀" "󰕾" ];
-          };
+        wireplumber = {
+          format = "{icon}  {volume}%";
+          format-muted = "󰝟";
+          format-icons = [ "󰕿" "󰖀" "󰕾" ];
+          on-click = "";
+          tooltip-format = "  Meow";
         };
       };
     };

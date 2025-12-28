@@ -95,8 +95,7 @@
   hardware.bluetooth.enable = true;
 
   # Enable sound with pipewire.
-  services.pulseaudio.enable = false; # Disable PulseAudio
-  security.rtkit.enable = true;       # Enable real-time support
+  services.pulseaudio.enable = false; # Disable PulseAudio so that pipewire works
   services.pipewire = {
     enable = true;                     # Enable PipeWire
     alsa = {
@@ -113,7 +112,10 @@
   };
 
   # enable auth with polkit
-  security.polkit.enable = true;
+  security = {
+    polkit.enable = true;
+    rtkit.enable = true;       # Enable real-time support
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.raumsegler = {
@@ -144,7 +146,8 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
   inputs.matugen.packages.${stdenv.hostPlatform.system}.default
-  inputs.awww.packages.${pkgs.stdenv.hostPlatform.system}.awww
+  inputs.awww.packages.${stdenv.hostPlatform.system}.awww
+  inputs.hyprshutdown.packages.${stdenv.hostPlatform.system}.hyprshutdown # clean logout
   (inputs.quickshell.packages.${stdenv.hostPlatform.system}.default.withModules [
     qt6.qtsvg
     qt6.qtimageformats
@@ -175,14 +178,25 @@
     zpix-pixel-font
     noto-fonts
     noto-fonts-cjk-sans    
-     noto-fonts-color-emoji # for 25.11
-     nerd-fonts.fira-code
+    noto-fonts-color-emoji
+    nerd-fonts.fira-code
     twemoji-color-font
   ];
 
   environment.sessionVariables.NIXOS_OZONE_WL = 1;
   programs.hyprland = {
     enable = true;
+    withUWSM  = true;
+  };
+  programs.uwsm = {
+    enable = true;
+    waylandCompositors = {
+      hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/Hyprland";
+      };
+    };
   };
 
 

@@ -36,10 +36,9 @@
   xdg.configFile."rofi/launcher.rasi".text = ''
 /*****----- Configuration -----*****/
 configuration {
-	modi:                       "drun,run";
+	modi:                       "drun";
     show-icons:                 true;
     display-drun:               "APPS";
-    display-run:                "RUN";
 	drun-display-format:        "{name}";
 	window-format:              "{w} · {c} · {t}";
 }
@@ -47,7 +46,7 @@ configuration {
 /*****----- Global Properties -----*****/
 @theme "~/.config/rofi/colors.rasi"
 * {
-    font:                        "JetBrains Mono Nerd Font 10";
+    font:                        "Fira Code Nerd Font 12";
     background:                  @main-bg;
     background-alt:              @main-br;
     foreground:                  @main-fg;
@@ -62,7 +61,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       1000px;
+    width:                       40%;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -76,26 +75,26 @@ window {
 
 /*****----- Main Box -----*****/
 mainbox {
-    border-radius:               15px;
+    border-radius:               0px;
     enabled:                     true;
     spacing:                     0px;
-    background-color:            @background;
-    orientation:                 horizontal;
-    children:                    [ "imagebox", "listbox" ];
+    background-color:            transparent;
+    orientation:                 vertical;
+    children:                    [ "inputbar", "listbox" ];
 }
 
-imagebox {
+/*imagebox {
     padding:                     20px;
     background-color:            transparent;
-    background-image:            url("~/dotfiles/wallpapers/current.set", height);
+    background-image:            url("~/Pictures/Wallpapers/current.set", height); 
     orientation:                 vertical;
-    children:                    [ "inputbar", "dummy", "mode-switcher" ];
-}
+    children:                    [ "inputbar" ];
+}*/
 
 listbox {
     spacing:                     20px;
     padding:                     20px;
-    background-color:            transparent;
+    background-color:            @background;
     orientation:                 vertical;
     children:                    [ "message", "listview" ];
 }
@@ -108,8 +107,8 @@ dummy {
 inputbar {
     enabled:                     true;
     spacing:                     10px;
-    padding:                     15px;
-    border-radius:               10px;
+    padding:                     20px;
+    border-radius:               0px;
     background-color:            @background-alt;
     text-color:                  @foreground;
     children:                    [ "textbox-prompt-colon", "entry" ];
@@ -117,7 +116,7 @@ inputbar {
 textbox-prompt-colon {
     enabled:                     true;
     expand:                      false;
-    str:                         "";
+    str:                         " ";
     background-color:            inherit;
     text-color:                  inherit;
 }
@@ -131,9 +130,10 @@ entry {
 }
 
 /*****----- Mode Switcher -----*****/
-mode-switcher{
+/*mode-switcher{
     enabled:                     true;
     spacing:                     20px;
+    padding:                     20px;
     background-color:            transparent;
     text-color:                  @foreground;
 }
@@ -145,10 +145,10 @@ button {
     cursor:                      pointer;
 }
 button selected {
-    background-color:            @selected;
-    text-color:                  @foreground;
+    background-color:            @select-fg;
+    text-color:                  @select-bg;
 }
-
+*/
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
@@ -191,8 +191,8 @@ element normal.active {
     text-color:                  @foreground;
 }
 element selected.normal {
-    background-color:            @selected;
-    text-color:                  @foreground;
+    background-color:            @select-fg;
+    text-color:                  @select-bg;
 }
 element selected.urgent {
     background-color:            @urgent;
@@ -242,7 +242,7 @@ error-message {
         modi: "drun";
         show-icons: true;
         drun-display-format: "{name}";
-        font: "JetBrainsMono Nerd Font 12";
+        font: "Fira Code Nerd Font 12";
     }
 
     @theme "~/.config/rofi/colors.rasi"
