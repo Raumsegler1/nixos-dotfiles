@@ -151,8 +151,17 @@
     mommy     # funny right fish prompt  
     lolcat    # colorful text 
     tlrc      # tldr written in rust
-    imagemagick # lots of usefull commands for image processing
-    wl-clipboard# useful cmds for scripts
+    bluetui   # tui based bluetooth manager
+    playerctl # terminal mpris client to control media
+    sptlrx    # lyrics in terminal useful for quickshell
+    imagemagick   # lots of usefull commands for image processing
+    wl-clipboard  # useful cmds for scripts
+
+    # icons
+    weather-icons         # icons for weather related stuff
+    material-icons        # material icons by google
+    material-design-icons # material icons by the community
+    candy-icons           # colorful icons
 
     # Laptop functionality
     brightnessctl # controlling backlight brightness

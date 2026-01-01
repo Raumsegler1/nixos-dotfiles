@@ -175,7 +175,8 @@
 
       exec-once = [
         #"systemctl --user start hyprpolkitagent.service"
-        "uwsm app -- waybar"
+        #"uwsm app -- waybar"
+        "uwsm app -- qs --path ~/Projects/calypso/shell.qml -d"
         "uwsm app -- awww-daemon"
         "wl-paste --watch cliphist store"
         "uwsm app -- dunst"
@@ -210,20 +211,30 @@
       ];
 
       # Workspace Rules
-      workspace = "special,gapsin:24,gapsout:64";
+      workspace = [
+        "1, persistent:true"
+        "2, persistent:true"
+        "3, persistent:true"
+        "4, persistent:true"
+        "5, persistent:true"
+      ];
 
       decoration = {
         rounding = 10;
         #drop_shadow = false
         #shadow_range = 1
-        active_opacity = 0.93;
-        inactive_opacity = 0.93;
+
+        #active_opacity = 0.93;
+        #inactive_opacity = 0.93;
+        active_opacity = 0.85;
+        inactive_opacity = 0.85;
+
         dim_inactive = true;
         dim_strength = 0.18;
         dim_special = 0.5;
         blur = {
           enabled = "yes"; 
-          size = 5;
+          size = 10;
           passes = 3;
           noise = 0;
           brightness = 0.90;
@@ -236,7 +247,7 @@
         gaps_out = 10;
         "col.active_border" = "$tertiary"; 
         "col.inactive_border" = "$primary";
-        border_size = 3;
+        border_size = 2;
         layout = "dwindle";
         #layout = scroller;
         resize_on_border = true;
